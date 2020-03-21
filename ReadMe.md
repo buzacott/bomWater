@@ -6,6 +6,11 @@ At the moment two convenience functions have been prepared to access daily and h
 
 ### Installation
 
+You can install `bomWater` directly from this repo using `devtools`:
+
+```
+devtools::install_github('https://github.com/a-buz/bomWater')
+```
 
 ### Example
 
@@ -13,7 +18,7 @@ At the moment two convenience functions have been prepared to access daily and h
 library(bomWater)
 
 # Cotter River at Gingera
-cotterRiver = getDailyFlow('410730', '2020-01-01', '2020-01-31')
+cotterRiver = getDailyFlow(stationNumber='410730', startDate='2020-01-01', endDate='2020-01-31')
 
 cotterRiver
 # A tibble: 31 x 3
