@@ -8,13 +8,13 @@ At the moment two convenience functions have been prepared to access daily and h
 
 You can install `bomWater` directly from this repo using `devtools`:
 
-```
+```r
 devtools::install_github('https://github.com/a-buz/bomWater')
 ```
 
 ### Example
 
-```
+```r
 library(bomWater)
 
 # Cotter River at Gingera
