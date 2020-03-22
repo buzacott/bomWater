@@ -77,7 +77,7 @@ getFlow = function(tsName, stationNumber, startDate, endDate) {
 
   # Check date input is valid
   if(anyNA(lubridate::as_date(c(startDate, endDate), '%Y-%m-%d', tz=''))) {
-    stop('Error: dates must be formatted as %Y-%m-%d (e.g. 2000-01-01)')
+    stop('Dates must be formatted as %Y-%m-%d (e.g. 2000-01-01)')
   }
 
   stationList = getStationList(stationNumber)
@@ -97,7 +97,7 @@ getFlow = function(tsName, stationNumber, startDate, endDate) {
   return(timeSeriesValues)
 }
 
-getDailyFlow = function(stationNumber, startDate, endDate, aggregation='24HR', tz=NULL) {
+getDailyFlow = function(stationNumber, startDate, endDate, var='mean', aggregation='24HR', tz=NULL) {
   # Inputs
   # Station number: character/integer
   # Start date: character/date formatted to %Y-%m-%d
@@ -109,10 +109,28 @@ getDailyFlow = function(stationNumber, startDate, endDate, aggregation='24HR', t
   # Returns
   # A tibble with date, discharge (Q) in m3/s and the quality code (QC)
 
-  if(aggregation == '24HR') tsName = 'DMQaQc.Merged.DailyMean.24HR'
-  if(aggregation == '09HR') tsName = 'DMQaQc.Merged.DailyMean.09HR'
-  if(!aggregation %in% c('24HR', '09HR')) {
-    stop('Error: invalid aggregation option provided.')
+  # Name structure of tsNames
+  # DMQaQc.Merged.var.aggregation
+
+  # Valid tsNames
+  validDailyTS = c('DMQaQc.Merged.DailyMean.09HR',
+                   'DMQaQc.Merged.DailyMean.24HR',
+                   'DMQaQc.Merged.DailyMax.24HR',
+                   'DMQaQc.Merged.DailyMin.24HR')
+
+  # Handle possible formats of var input
+  var = stringr::str_to_title(var)
+  aggregation = toupper(aggregation)
+  tsName = paste0('DMQaQc.Merged.Daily', var, '.', aggregation)
+
+  if(!tsName %in% validDailyTS) {
+    if(!aggregation %in% c('24HR', '09HR')) {
+      stop('Invalid aggregation option provided.')
+    }
+    if(aggregation=='09HR' & var!='Mean') {
+      stop('Only the mean is available to be aggregated from 9am to 9am')
+    }
+    stop('Invalid var input provided. Must be mean, max or min.')
   }
 
   timeSeriesValues = getFlow(tsName,
@@ -128,8 +146,8 @@ getDailyFlow = function(stationNumber, startDate, endDate, aggregation='24HR', t
 
   dailyFlow = timeSeriesValues %>%
     dplyr::rename(Date = Timestamp,
-           `Q (m3/s)` = Value,
-           QC = `Quality Code`) %>%
+                  `Q (m3/s)` = Value,
+                  QC = `Quality Code`) %>%
     dplyr::mutate(Date = lubridate::as_date(lubridate::as_datetime(Date), tz=tz),
                   `Q (m3/s)` = as.numeric(`Q (m3/s)`),
                   QC = as.integer(QC))
@@ -169,3 +187,6 @@ getHourlyFlow = function(stationNumber, startDate, endDate, tz=NULL) {
 
   return(hourlyFlow)
 }
+
+
+

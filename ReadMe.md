@@ -2,7 +2,7 @@
 
 This `R` package grabs data from the Australian Bureau of Meteorology Water Data online (http://bom.gov.au/waterdata/) via the WISKI API.
 
-At the moment two convenience functions have been prepared to access daily and hourly mean streamflow for gauging stations. More will be implemented later on. If you know the WISKI API there other functions included that you can build your own request from for now.
+At the moment two convenience functions have been prepared to access daily and hourly streamflow for gauging stations. More will be implemented later on. If you know the WISKI API there other functions included that you can build your own request from for now.
 
 ### Installation
 
