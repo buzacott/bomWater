@@ -12,9 +12,9 @@ Several functions have been written to access the prepared quality checked times
 
 Any of the Water Data Online variables can be accessed. Make sure to use the formatting of the parameter types is as in the manual and on Water Data Online.
 
-Station information can be queried, as in the example below.
+Station information can be queried using `getStationList`, as in the example below.
 
-The SOS2 manual can be consulted for the units of the different timeseries, as well as the meanings of the different quality codes \url{http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor\%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20Online\%20v1.0.1.pdf}
+The SOS2 manual can be consulted for the units of the different timeseries, as well as the meanings of the different quality codes ([BoM WISKI manual](http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor\%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20Online\%20v1.0.1.pdf)).
 
 ### Installation
 
@@ -51,7 +51,7 @@ cotterRiver
 10 2020-01-10 00:00:00 0.014             10
 # … with 21 more rows
 
-# Monthly rainfall at Cotter Hut
+# Monthly total rainfall in mm at Cotter Hut
 cotterHut = getMonthly(parameterType = 'Rainfall',
                        stationNumber = '570946',
                        startDate     = '2019-01-01',
