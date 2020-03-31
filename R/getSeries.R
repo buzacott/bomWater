@@ -1,3 +1,7 @@
+#' @template timeseriesDocs
+#' @details This function can be used if the others have missed a particular time series (e.g. the forecasting timeseries)
+#' @param tsName The timeseries name (e.g. DMQaQc.Merged.DailyMean.24HR) that is desired.
+#' @export
 getTimeSeries = function(parameterType, stationNumber, startDate, endDate, tz, returnFields, tsName) {
   # Inputs
   # Station number: character/integer
@@ -27,9 +31,9 @@ getTimeSeries = function(parameterType, stationNumber, startDate, endDate, tz, r
     stop(paste('Station number', stationNumber, 'is invalid'))
   }
 
-  timeseriesID = getTimeseriesID(stationNumber,
-                                 tsName,
-                                 parameterType)
+  timeseriesID = getTimeseriesID(parameterType,
+                                 stationNumber,
+                                 tsName)
 
   timeSeriesValues = getTimeseriesValues(timeseriesID$ts_id,
                                          startDate,
@@ -51,16 +55,49 @@ getTimeSeries = function(parameterType, stationNumber, startDate, endDate, tz, r
   return(timeSeriesValues)
 }
 
-getHourly  = function(parameterType, stationNumber, startDate, endDate, tz=NULL, returnFields) {
+#' @template timeseriesDocs
+#' @export
+getAsStored = function(parameterType, stationNumber, startDate, endDate, tz, returnFields) {
+
+  parameterType = stringr::str_to_title(parameterType)
+
+  if(missing(tz)) tz=NULL
 
   if(missing(returnFields)) {
     returnFields = 'Timestamp,Value,Quality Code'
   }
 
-  timeSeriesValues = getTimeSeries(stationNumber,
+  timeSeriesValues = getTimeSeries(parameterType,
+                                   stationNumber,
                                    startDate,
                                    endDate,
-                                   parameterType,
+                                   tz,
+                                   returnFields,
+                                   'DMQaQc.Merged.AsStored.1')
+
+  return(timeSeriesValues)
+}
+
+#' @template timeseriesDocs
+#' @export
+getHourly  = function(parameterType, stationNumber, startDate, endDate, tz, returnFields) {
+
+  parameterType = stringr::str_to_title(parameterType)
+
+  if(!parameterType %in% c('Water Course Discharge',
+                           'Water Course Level',
+                           'Storage Level',
+                           'Storage Volume')) {
+    stop(paste('Hourly data is not available for parameterType', parameterType))
+  }
+
+  if(missing(tz)) tz=NULL
+  if(missing(returnFields)) returnFields = 'Timestamp,Value,Quality Code'
+
+  timeSeriesValues = getTimeSeries(parameterType,
+                                   stationNumber,
+                                   startDate,
+                                   endDate,
                                    tz,
                                    returnFields,
                                    'DMQaQc.Merged.HourlyMean.HR')
@@ -68,7 +105,13 @@ getHourly  = function(parameterType, stationNumber, startDate, endDate, tz=NULL,
   return(timeSeriesValues)
 }
 
-getDaily = function(parameterType, stationNumber, startDate, endDate, var, aggregation, tz=NULL, returnFields) {
+#' @template timeseriesDocs
+#' @param var The daily variable of interest. Valid inputs are \code{mean}, \code{min}, \code{max} for continuous series
+#'  such as discharge and \code{total} for discrete series such as rainfall and evaporation.
+#' @param aggregation Whether the data is to be aggregated midnight to midnight (\code{24HR}) or from 9am-9am (\code{09HR}).
+#' Default is \code{24HR} and \code{09HR} is only available for mean discharge and total rainfall and evaporation.
+#' @export
+getDaily = function(parameterType, stationNumber, startDate, endDate, var, aggregation, tz, returnFields) {
 
   parameterType = stringr::str_to_title(parameterType)
 
@@ -118,6 +161,51 @@ getDaily = function(parameterType, stationNumber, startDate, endDate, var, aggre
     stop('Invalid combination of parameterType, var and aggregation')
   }
 
+  if(missing(tz)) tz=NULL
+
+  if(missing(returnFields)) returnFields = 'Timestamp,Value,Quality Code'
+
+
+  timeSeriesValues = getTimeSeries(parameterType,
+                                   stationNumber,
+                                   startDate,
+                                   endDate,
+                                   tz,
+                                   returnFields,
+                                   tsName)
+
+  return(timeSeriesValues)
+}
+
+#' @template timeseriesDocs
+#' @export
+getMonthly = function(parameterType, stationNumber, startDate, endDate, tz, returnFields) {
+
+  parameterType = stringr::str_to_title(parameterType)
+
+  if(parameterType %in% c('Dry Air Temperature',
+                          'Relative Humidity',
+                          'Wind Speed',
+                          'Electrical Conductivity At 25C',
+                          'Turbidity',
+                          'Water Ph',
+                          'Water Temperature',
+                          'Ground Water Level',
+                          'Water Course Level',
+                          'Water Course Discharge',
+                          'Storage Level',
+                          'Storage Volume')) {
+    tsName = 'DMQaQc.Merged.MonthlyMean.CalMonth'
+  }
+
+  if(parameterType %in% c('Rainfall', 'Evaporation')) {
+    tsName = c('DMQaQc.Merged.MonthlyTotal.CalMonth')
+  }
+
+  if(!exists('tsName')) stop('Invalid parameterType')
+
+  if(missing(tz)) tz=NULL
+
   if(missing(returnFields)) returnFields = 'Timestamp,Value,Quality Code'
 
   timeSeriesValues = getTimeSeries(parameterType,
@@ -131,49 +219,9 @@ getDaily = function(parameterType, stationNumber, startDate, endDate, var, aggre
   return(timeSeriesValues)
 }
 
-getMonthly = function(parameterType, stationNumber, startDate, endDate, tz=NULL, returnFields) {
-
-  parameterType = stringr::str_to_title(parameterType)
-
-  if(parameterType %in% c('Dry Air Temperature',
-                          'Relative Humidity',
-                          'Wind Speed',
-                          'Electrical Conductivity At 25C',
-                          'Turbidity',
-                          'Water Ph',
-                          'Water Temperature',
-                          'Groundwater Level',
-                          'Watercourse Level',
-                          'Watercourse Discharge',
-                          'Storage Level',
-                          'Storage Volume')) {
-    tsName = 'DMQaQc.Merged.MonthlyMean.CalMonth'
-  }
-
-  if(parameterType %in% c('Rainfall', 'Evaporation')) {
-    tsName = c('DMQaQc.Merged.MonthlyTotal.CalMonth')
-  }
-
-  if(!exists('tsName')) {
-    stop('Invalid parameterType')
-  }
-
-  if(missing(returnFields)) {
-    returnFields = 'Timestamp,Value,Quality Code'
-  }
-
-  timeSeriesValues = getTimeSeries(parameterType,
-                                   stationNumber,
-                                   startDate,
-                                   endDate,
-                                   tz,
-                                   returnFields,
-                                   tsName)
-
-  return(timeSeriesValues)
-}
-
-getYearly = function(parameterType, stationNumber, startYear, endYear, tz=NULL, returnFields) {
+#' @template timeseriesDocs
+#' @export
+getYearly = function(parameterType, stationNumber, startYear, endYear, tz, returnFields) {
 
   parameterType = stringr::str_to_title(parameterType)
 
@@ -196,16 +244,14 @@ getYearly = function(parameterType, stationNumber, startYear, endYear, tz=NULL, 
   }
 
   if(parameterType %in% c('Rainfall', 'Evaporation')) {
-    tsName = c('DMQaQc.Merged.YearlyTotal.CalMonth')
+    tsName = c('DMQaQc.Merged.YearlyTotal.CalYear')
   }
 
-  if(!exists('tsName')) {
-    stop('Invalid parameterType')
-  }
+  if(!exists('tsName')) stop('Invalid parameterType')
 
-  if(missing(returnFields)) {
-    returnFields = 'Timestamp,Value,Quality Code'
-  }
+  if(missing(tz)) tz=NULL
+
+  if(missing(returnFields)) returnFields = 'Timestamp,Value,Quality Code'
 
   timeSeriesValues = getTimeSeries(parameterType,
                                    stationNumber,
@@ -217,3 +263,8 @@ getYearly = function(parameterType, stationNumber, startYear, endYear, tz=NULL, 
 
   return(timeSeriesValues)
 }
+
+
+
+
+
