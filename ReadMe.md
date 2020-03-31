@@ -2,15 +2,32 @@
 
 This `R` package grabs data from the Australian Bureau of Meteorology Water Data online (http://bom.gov.au/waterdata/) via the WISKI API.
 
-Several functions have been written to access the prepared quality checked timeseries. These are:
+Several functions have been written to retreive the quality checked timeseries. These are:
 
-- getAsStored
-- getHourly
-- getDaily
-- getMonthly
-- getYearly
+- `getAsStored`
+- `getHourly`
+- `getDaily`
+- `getMonthly`
+- `getYearly`
 
-Any of the Water Data Online variables can be accessed. Make sure to use the formatting of the parameter types is as in the manual and on Water Data Online.
+The following Water Data Online variables can be accessed using these functions:
+
+- Water Course Discharge
+- Water Course Level
+- Storage Volume
+- Storage Level
+- Ground Water Level
+- Rainfall
+- Evaporation
+- Dry Air Temperature
+- Relative Humidity
+- Wind Speed
+- Electrical conductivity at 25C
+- Turbidity
+- Water pH
+- Water Temperature
+
+Make sure to use the formatting of the parameter types is as in the manual and on Water Data Online. 
 
 Station information can be queried using `getStationList`, as in the example below.
 

@@ -1,7 +1,7 @@
 Package: bomWater
 Type: Package
 Title: Download Bureau of Meteorology Water Data
-Version: 0.5.0
+Version: 0.2.0
 Author: Alexander Buzacott
 Maintainer: Alexander Buzacott <alexander.buzacott@sydney.edu.au>
 Description: This package accesses the Bureau of Meteorology Water Data Online web services to easily access Australian water information.

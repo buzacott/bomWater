@@ -106,10 +106,10 @@ getHourly  = function(parameterType, stationNumber, startDate, endDate, tz, retu
 }
 
 #' @template timeseriesDocs
-#' @param var The daily variable of interest. Valid inputs are \code{mean}, \code{min}, \code{max} for continuous series
-#'  such as discharge and \code{total} for discrete series such as rainfall and evaporation.
-#' @param aggregation Whether the data is to be aggregated midnight to midnight (\code{24HR}) or from 9am-9am (\code{09HR}).
-#' Default is \code{24HR} and \code{09HR} is only available for mean discharge and total rainfall and evaporation.
+#' @param var The daily variable of interest. Valid inputs are `mean`, `min`, `max` for continuous series
+#'  such as discharge and `total` for discrete series such as rainfall and evaporation.
+#' @param aggregation Whether the data is to be aggregated midnight to midnight (`24HR`) or from 9am-9am (`09HR`).
+#' The default is `24HR`. `09HR` is only available for mean discharge and total rainfall and evaporation.
 #' @export
 getDaily = function(parameterType, stationNumber, startDate, endDate, var, aggregation, tz, returnFields) {
 

@@ -7,13 +7,14 @@
 getYearly(parameterType, stationNumber, startYear, endYear, tz, returnFields)
 }
 \arguments{
-\item{parameterType}{The water data parameter type (e.g. Water Course Discharge)}
+\item{parameterType}{The water data parameter type (e.g. Water Course Discharge). See below for
+a list of available parameters}
 
 \item{stationNumber}{The AWRC station number.}
 
 \item{tz}{Optional: the desired time zone for the output timeseries. Input must be an Olson Name
 (see \code{OlsonNames()}). By default the the timeseries is returned in an offset timezone
-(e.g. \code{'Etc/GMT-10'} for NSW) as the timeseries do not observe DST.}
+(e.g. \code{Etc/GMT-10} for NSW) as the timeseries do not observe DST.}
 
 \item{returnFields}{Optional: columns to be returned from Water Data Online. By default Timestamp
 Value and Quality Code are returned.}
@@ -23,7 +24,7 @@ Value and Quality Code are returned.}
 \item{endDate}{End date formatted as a string or date class (YYYY-MM-DD)}
 }
 \value{
-A tibble with the requested return fields, which by default are `Timestamp`, `Value` and `Quality Code`.
+A tibble with the requested return fields, which by default are \code{Timestamp}, \code{Value} and \verb{Quality Code}.
 Zero row tibbles are returned if no data is available for the requested dates. The aggregation of data
 is generally the mean for most variables, except for rainfall and evaporation which is the sum over the chosen period.
 }
@@ -33,6 +34,24 @@ This function returns a formatted timeseries from Water Data Online.
 \details{
 This function returns a timeseries within the chosen date window. The units of the timeseries values are as per
 Water Data Online and can be viewed on page 39 of the Water Data Online SOS manual (linked in See Also below).
+
+The following parameters (\code{parameterType}) can be requested:
+\itemize{
+\item Water Course Discharge
+\item Water Course Level
+\item Storage Volume
+\item Storage Level
+\item Ground Water Level
+\item Rainfall
+\item Evaporation
+\item Dry Air Temperature
+\item Relative Humidity
+\item Wind Speed
+\item Electrical conductivity at 25C
+\item Turbidity
+\item Water pH
+\item Water Temperature
+}
 }
 \examples{
 \dontrun{
