@@ -12,22 +12,24 @@ Several functions have been written to retreive the quality checked timeseries. 
 
 The following Water Data Online variables can be accessed using these functions:
 
-- Water Course Discharge
-- Water Course Level
-- Storage Volume
-- Storage Level
-- Ground Water Level
-- Rainfall
-- Evaporation
-- Dry Air Temperature
-- Relative Humidity
-- Wind Speed
-- Electrical conductivity at 25C
-- Turbidity
-- Water pH
-- Water Temperature
+| Parameter                      | Units  |
+| ------------------------------ | ------ |
+| Water Course Discharge         | m^3^/s |
+| Water Course Level             | m      |
+| Electrical conductivity at 25C | µS/cm  |
+| Turbidity                      | NTU    |
+| pH                             | pH     |
+| Water Temperature              | ºC     |
+| Storage Volume                 | ML     |
+| Storage Level                  | m      |
+| Ground Water Level             | m      |
+| Rainfall                       | mm     |
+| Evaporation                    | mm     |
+| Dry Air Temperature            | ºC     |
+| Relative Humidity              | %      |
+| Wind Speed                     | m/s    |
 
-Make sure to use the formatting of the parameter types is as in the manual and on Water Data Online. 
+Make sure formatting of the parameter types is as in the table above when making requests. The function `parameters()` can be used to retrieve this from within R.
 
 Station information can be queried using `getStationList`, as in the example below.
 

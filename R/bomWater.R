@@ -40,16 +40,23 @@ makeBOMRequest = function(params) {
                            'getSiteList',
                            'getStationList',
                            'getTimeseriesList')) {
+
     if(json[1]=='No matches.') stop('No parameterType and stationNumber match found')
-    tbl = tibble::as_tibble(json, .name_repair=~json[1,]) %>%
+
+    colnames(json) = json[1,]
+    tbl = tibble::as_tibble(json) %>%
       dplyr::slice(-1)
+
   } else if(params$request == 'getTimeseriesValues') {
+
     columnNames = unlist(stringr::str_split(json$columns, ','))
     if(length(json$data[[1]])==0) {
       tbl = tibble::tibble(Timestamp=character(), Value=character(), `Quality Code`=character())
     } else {
-      tbl = tibble::as_tibble(json$data[[1]], .name_repair=~columnNames)
+      colnames(json$data[[1]]) = columnNames
+      tbl = tibble::as_tibble(json$data[[1]])
     }
+
   }
   return(tbl)
 }

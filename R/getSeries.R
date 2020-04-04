@@ -2,22 +2,16 @@
 #' @details This function can be used if the others have missed a particular time series (e.g. the forecasting timeseries)
 #' @param tsName The timeseries name (e.g. DMQaQc.Merged.DailyMean.24HR) that is desired.
 #' @export
-getTimeSeries = function(parameterType, stationNumber, startDate, endDate, tz, returnFields, tsName) {
-  # Inputs
-  # Station number: character/integer
-  # Start date: character/date formatted to %Y-%m-%d
-  # End date: character/date formatted to %Y-%m-%d
-  # parameterType: e.g. Water Course Discharge
-  # tsName: timeseries name
-  # tz: Olson name string that the user wants to return the timezone to.
-  #     Default is to return an offset timezone as the data do not
-  #     observe DST.
-  # Returns
-  # A tibble
+getTimeseries = function(parameterType, stationNumber, startDate, endDate, tz, returnFields, tsName) {
 
   # Check date input is valid
   if(anyNA(lubridate::as_date(c(startDate, endDate), '%Y-%m-%d', tz=''))) {
     stop('Dates must be formatted as %Y-%m-%d (e.g. 2000-01-01)')
+  }
+
+  # Check if tz is valid
+  if(!is.null(tz)) {
+    if(!tz %in% OlsonNames()) stop('Invalid tz argument. Check it is in OlsonNames().')
   }
 
   # Ensure start is less than end
@@ -59,7 +53,10 @@ getTimeSeries = function(parameterType, stationNumber, startDate, endDate, tz, r
 #' @export
 getAsStored = function(parameterType, stationNumber, startDate, endDate, tz, returnFields) {
 
-  parameterType = stringr::str_to_title(parameterType)
+  parameterType = parameters()[tolower(parameterType) == tolower(parameters())]
+  if(length(parameterType)==0) {
+    stop('Invalid parameter requested')
+  }
 
   if(missing(tz)) tz=NULL
 
@@ -67,7 +64,7 @@ getAsStored = function(parameterType, stationNumber, startDate, endDate, tz, ret
     returnFields = 'Timestamp,Value,Quality Code'
   }
 
-  timeSeriesValues = getTimeSeries(parameterType,
+  timeSeriesValues = getTimeseries(parameterType,
                                    stationNumber,
                                    startDate,
                                    endDate,
@@ -82,7 +79,7 @@ getAsStored = function(parameterType, stationNumber, startDate, endDate, tz, ret
 #' @export
 getHourly  = function(parameterType, stationNumber, startDate, endDate, tz, returnFields) {
 
-  parameterType = stringr::str_to_title(parameterType)
+  parameterType = parameters()[tolower(parameterType) == tolower(parameters())]
 
   if(!parameterType %in% c('Water Course Discharge',
                            'Water Course Level',
@@ -94,7 +91,7 @@ getHourly  = function(parameterType, stationNumber, startDate, endDate, tz, retu
   if(missing(tz)) tz=NULL
   if(missing(returnFields)) returnFields = 'Timestamp,Value,Quality Code'
 
-  timeSeriesValues = getTimeSeries(parameterType,
+  timeSeriesValues = getTimeseries(parameterType,
                                    stationNumber,
                                    startDate,
                                    endDate,
@@ -113,11 +110,14 @@ getHourly  = function(parameterType, stationNumber, startDate, endDate, tz, retu
 #' @export
 getDaily = function(parameterType, stationNumber, startDate, endDate, var, aggregation, tz, returnFields) {
 
-  parameterType = stringr::str_to_title(parameterType)
+  parameterType = parameters()[tolower(parameterType) == tolower(parameters())]
+  if(length(parameterType)==0) {
+    stop('Invalid parameter requested')
+  }
 
   # Handle possible formats of var input
   if(missing(var)) {
-    if(parameterType %in% c('Rainfall', 'Evaporation')) {
+    if(parameterType %in% parameters('discrete')) {
       var='Total'
     } else {
       var='Mean'
@@ -133,26 +133,17 @@ getDaily = function(parameterType, stationNumber, startDate, endDate, var, aggre
 
   tsName = paste0('DMQaQc.Merged.Daily', var, '.', aggregation)
 
-  if(parameterType %in% c('Dry Air Temperature',
-                          'Relative Humidity',
-                          'Wind Speed',
-                          'Electrical conductivity at 25C',
-                          'Turbidity',
-                          'Water pH',
-                          'Water Temperature',
-                          'Ground Water Level',
-                          'Water Course Level',
-                          'Water Course Discharge',
-                          'Storage Level',
-                          'Storage Volume')) {
-    validDailyTS = c('DMQaQc.Merged.DailyMean.09HR',
-                     'DMQaQc.Merged.DailyMean.24HR',
+  if(parameterType %in% parameters('continuous')) {
+    validDailyTS = c('DMQaQc.Merged.DailyMean.24HR',
                      'DMQaQc.Merged.DailyMax.24HR',
                      'DMQaQc.Merged.DailyMin.24HR')
+    if(parameterType == 'Water Course Discharge') {
+      validDailyTS = c(validDailyTS,
+                       'DMQaQc.Merged.DailyMean.09HR')
+    }
   }
 
-  if(parameterType %in% c('Rainfall',
-                          'Evaporation')) {
+  if(parameterType %in% parameters('discrete')) {
     validDailyTS = c('DMQaQc.Merged.DailyTotal.09HR',
                      'DMQaQc.Merged.DailyTotal.24HR')
   }
@@ -166,7 +157,7 @@ getDaily = function(parameterType, stationNumber, startDate, endDate, var, aggre
   if(missing(returnFields)) returnFields = 'Timestamp,Value,Quality Code'
 
 
-  timeSeriesValues = getTimeSeries(parameterType,
+  timeSeriesValues = getTimeseries(parameterType,
                                    stationNumber,
                                    startDate,
                                    endDate,
@@ -181,24 +172,16 @@ getDaily = function(parameterType, stationNumber, startDate, endDate, var, aggre
 #' @export
 getMonthly = function(parameterType, stationNumber, startDate, endDate, tz, returnFields) {
 
-  parameterType = stringr::str_to_title(parameterType)
+  parameterType = parameters()[tolower(parameterType) == tolower(parameters())]
+  if(length(parameterType)==0) {
+    stop('Invalid parameter requested')
+  }
 
-  if(parameterType %in% c('Dry Air Temperature',
-                          'Relative Humidity',
-                          'Wind Speed',
-                          'Electrical Conductivity At 25C',
-                          'Turbidity',
-                          'Water Ph',
-                          'Water Temperature',
-                          'Ground Water Level',
-                          'Water Course Level',
-                          'Water Course Discharge',
-                          'Storage Level',
-                          'Storage Volume')) {
+  if(parameterType %in% parameters('continuous')) {
     tsName = 'DMQaQc.Merged.MonthlyMean.CalMonth'
   }
 
-  if(parameterType %in% c('Rainfall', 'Evaporation')) {
+  if(parameterType %in% parameters('discrete')) {
     tsName = c('DMQaQc.Merged.MonthlyTotal.CalMonth')
   }
 
@@ -208,7 +191,7 @@ getMonthly = function(parameterType, stationNumber, startDate, endDate, tz, retu
 
   if(missing(returnFields)) returnFields = 'Timestamp,Value,Quality Code'
 
-  timeSeriesValues = getTimeSeries(parameterType,
+  timeSeriesValues = getTimeseries(parameterType,
                                    stationNumber,
                                    startDate,
                                    endDate,
@@ -223,27 +206,19 @@ getMonthly = function(parameterType, stationNumber, startDate, endDate, tz, retu
 #' @export
 getYearly = function(parameterType, stationNumber, startYear, endYear, tz, returnFields) {
 
-  parameterType = stringr::str_to_title(parameterType)
+  parameterType = parameters()[tolower(parameterType) == tolower(parameters())]
+  if(length(parameterType)==0) {
+    stop('Invalid parameter requested')
+  }
 
   startDate = paste0(stringr::str_sub(startYear, 1, 4), '-01-01')
   endDate   = paste0(stringr::str_sub(endYear, 1, 4), '-12-31')
 
-  if(parameterType %in% c('Dry Air Temperature',
-                          'Relative Humidity',
-                          'Wind Speed',
-                          'Electrical Conductivity At 25C',
-                          'Turbidity',
-                          'Water Ph',
-                          'Water Temperature',
-                          'Groundwater Level',
-                          'Water Course Level',
-                          'Water Course Discharge',
-                          'Storage Level',
-                          'Storage Volume')) {
+  if(parameterType %in% parameters('continuous')) {
     tsName = 'DMQaQc.Merged.YearlyMean.CalYear'
   }
 
-  if(parameterType %in% c('Rainfall', 'Evaporation')) {
+  if(parameterType %in% parameters('discrete')) {
     tsName = c('DMQaQc.Merged.YearlyTotal.CalYear')
   }
 
@@ -253,7 +228,7 @@ getYearly = function(parameterType, stationNumber, startYear, endYear, tz, retur
 
   if(missing(returnFields)) returnFields = 'Timestamp,Value,Quality Code'
 
-  timeSeriesValues = getTimeSeries(parameterType,
+  timeSeriesValues = getTimeseries(parameterType,
                                    stationNumber,
                                    startDate,
                                    endDate,
@@ -264,7 +239,62 @@ getYearly = function(parameterType, stationNumber, startYear, endYear, tz, retur
   return(timeSeriesValues)
 }
 
+#' @title Available water parameters
+#' @description
+#' `parameters` returns a vector of parameters that can be retrieved from Water Data Online.
+#' @param x Optional: if empty all available parameters will be returned. Alternatively, a vector
+#' of the continuous or discrete parameters can be requested.
+#' @usage
+#' parameters()
+#' @return
+#' A vector of parameters.
+#' @details
+#' The units of the parameters are as follows:
+#'
+#' * Water Course Discharge (m3/s)
+#' * Water Course Level (m)
+#' * Electrical conductivity at 25C (µS/cm)
+#' * Turbidity (NTU)
+#' * pH
+#' * Water Temperature (ºC)
+#' * Storage Volume (ML)
+#' * Storage Level (m)
+#' * Ground Water Level (m)
+#' * Rainfall (mm)
+#' * Evaporation (mm)
+#' * Dry Air Temperature (ºC)
+#' * Relative Humidity (%)
+#' * Wind Speed (m/s)
+#' @md
+#' @seealso
+#' \url{http://www.bom.gov.au/waterdata/}
+#' \url{http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor\%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20Online\%20v1.0.1.pdf}
+#' @examples
+#' parameters()
+#' parameters('continuous')
+#' parameters('discrete')
+#' @export
+parameters = function(x) {
+  continuous = c('Dry Air Temperature',
+                 'Relative Humidity',
+                 'Wind Speed',
+                 'Electrical Conductivity At 25C',
+                 'Turbidity',
+                 'pH',
+                 'Water Temperature',
+                 'Groundwater Level',
+                 'Water Course Level',
+                 'Water Course Discharge',
+                 'Storage Level',
+                 'Storage Volume')
+  discrete = c('Rainfall',
+               'Evaporation')
 
-
-
-
+  if(missing(x)) {
+    return(c(discrete, continuous))
+  } else {
+    x = tolower(x)
+    if(!x %in% c('continuous', 'discrete')) stop('Invalid parameter category entered')
+    return(get(x))
+  }
+}

@@ -8,11 +8,17 @@ Description: This package accesses the Bureau of Meteorology Water Data Online w
 License: MIT
 Encoding: UTF-8
 LazyData: true
+Depends:
+    R (>= 3.5.0)
 Imports: 
-    dplyr,
-    tibble,
-    httr,
-    jsonlite,
-    lubridate,
-    stringr
-RoxygenNote: 7.0.0
+    dplyr (>= 0.8.5),
+    tibble (>= 3.0.0),
+    httr (>= 1.4.1),
+    jsonlite (>= 1.6.1),
+    lubridate (>= 1.7.4),
+    stringr (>= 1.4.0)
+RoxygenNote: 7.1.0
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
