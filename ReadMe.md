@@ -14,7 +14,7 @@ The following Water Data Online variables can be accessed using these functions:
 
 | Parameter                      | Units  |
 | ------------------------------ | ------ |
-| Water Course Discharge         | m^3^/s |
+| Water Course Discharge         | m3/s   |
 | Water Course Level             | m      |
 | Electrical conductivity at 25C | µS/cm  |
 | Turbidity                      | NTU    |
