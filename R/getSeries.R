@@ -40,10 +40,13 @@ getTimeseries = function(parameterType, stationNumber, startDate, endDate, tz, r
     tz = paste0('Etc/GMT-', tzOffset) # For some reason a negative offset is ahead of UTC
   }
 
-  timeSeriesValues = timeSeriesValues %>%
-    dplyr::mutate(Timestamp = lubridate::as_datetime(Timestamp),
-                  Value = as.numeric(Value),
-                  `Quality Code` = as.integer(`Quality Code`))
+  timeSeriesValues$Timestamp = lubridate::as_datetime(timeSeriesValues$Timestamp)
+  timeSeriesValues$Value = as.numeric(timeSeriesValues$Value)
+  timeSeriesValues$`Quality Code` = as.integer(timeSeriesValues$`Quality Code`)
+  # timeSeriesValues = timeSeriesValues %>%
+  #   dplyr::mutate(Timestamp = lubridate::as_datetime(.data$Timestamp),
+  #                 Value = as.numeric(.data$Value),
+  #                 `Quality Code` = as.integer(.data.$`Quality Code`))
   attributes(timeSeriesValues$Timestamp)$tzone = tz
 
   return(timeSeriesValues)
@@ -203,16 +206,18 @@ getMonthly = function(parameterType, stationNumber, startDate, endDate, tz, retu
 }
 
 #' @template timeseriesDocs
+#' @param startDate Start date (formatted as YYYY-MM-DD) or just the year (YYYY)
+#' @param endDate End date (formatted as YYYY-MM-DD) or just the year (YYYY)
 #' @export
-getYearly = function(parameterType, stationNumber, startYear, endYear, tz, returnFields) {
+getYearly = function(parameterType, stationNumber, startDate, endDate, tz, returnFields) {
 
   parameterType = parameters()[tolower(parameterType) == tolower(parameters())]
   if(length(parameterType)==0) {
     stop('Invalid parameter requested')
   }
 
-  startDate = paste0(stringr::str_sub(startYear, 1, 4), '-01-01')
-  endDate   = paste0(stringr::str_sub(endYear, 1, 4), '-12-31')
+  startDate = paste0(stringr::str_sub(startDate, 1, 4), '-01-01')
+  endDate   = paste0(stringr::str_sub(endDate, 1, 4), '-12-31')
 
   if(parameterType %in% parameters('continuous')) {
     tsName = 'DMQaQc.Merged.YearlyMean.CalYear'
@@ -242,10 +247,8 @@ getYearly = function(parameterType, stationNumber, startYear, endYear, tz, retur
 #' @title Available water parameters
 #' @description
 #' `parameters` returns a vector of parameters that can be retrieved from Water Data Online.
-#' @param x Optional: if empty all available parameters will be returned. Alternatively, a vector
+#' @param pars Optional: if empty all available parameters will be returned. Alternatively, a vector
 #' of the continuous or discrete parameters can be requested.
-#' @usage
-#' parameters()
 #' @return
 #' A vector of parameters.
 #' @details
@@ -274,7 +277,7 @@ getYearly = function(parameterType, stationNumber, startYear, endYear, tz, retur
 #' parameters('continuous')
 #' parameters('discrete')
 #' @export
-parameters = function(x) {
+parameters = function(pars) {
   continuous = c('Dry Air Temperature',
                  'Relative Humidity',
                  'Wind Speed',
@@ -290,11 +293,11 @@ parameters = function(x) {
   discrete = c('Rainfall',
                'Evaporation')
 
-  if(missing(x)) {
+  if(missing(pars)) {
     return(c(discrete, continuous))
   } else {
-    x = tolower(x)
-    if(!x %in% c('continuous', 'discrete')) stop('Invalid parameter category entered')
-    return(get(x))
+    x = tolower(pars)
+    if(!pars %in% c('continuous', 'discrete')) stop('Invalid parameter category entered')
+    return(get(pars))
   }
 }

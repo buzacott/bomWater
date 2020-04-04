@@ -1,5 +1,3 @@
-#' @importFrom dplyr %>%
-
 #' @title Query the BoM WISKI API
 #' @description
 #' This function queries the Bureau of Meteorology Water Data KISTERS API.
@@ -12,8 +10,8 @@
 #' available for that query.
 #' @author Alexander Buzacott
 #' @examples
-#' \dontrun{
 #' # Getting the stations for Water Course Discharge
+#' \dontrun{
 #' params = list('request' = 'getStationList',
 #'               'parameterType_name' = 'Water Course Discharge',
 #'               'returnfields' = paste(c('station_name',
@@ -70,9 +68,6 @@ makeBOMRequest = function(params) {
 #' details of those stations. `returnFields` can be customised to return various data about
 #' the stations.
 #'
-#' @usage
-#' getStationList()
-#'
 #' @param parameterType The parameter for the station request (e.g. Water Course Discharge,
 #' Storage Level)
 #' @param stationNumber Optional: a single or multiple vector of AWRC station numbers.
@@ -86,14 +81,12 @@ makeBOMRequest = function(params) {
 #' @author Alexander Buzacott
 #'
 #' @examples
-#' \dontrun{
 #' # Get all Water Course Discharge Stations
 #' getStationList()
-#' Just the details for Cotter River at Gingera
+#' # Just the details for Cotter River at Gingera
 #' getStationList(stationNumber='410730')
-#' Rainfall stations
+#' # Rainfall stations
 #' getStationList(parameterType = 'Rainfall')
-#' }
 #'
 #' @export
 getStationList = function(parameterType, stationNumber, returnFields) {
@@ -129,7 +122,7 @@ getStationList = function(parameterType, stationNumber, returnFields) {
 
 #' @title Retrieve the timeseries ID
 #' @description
-#' `getTimeseriesID` finds the timeseries ID that can be used to obtain values for a parameter type,
+#' `getTimeseriesID` retrieves the timeseries ID that can be used to obtain values for a parameter type,
 #' station and timeseries combination.
 #' @param parameterType The parameter of interest (e.g. Water Course Discharge).
 #' @param stationNumber The AWRC station number.
@@ -184,7 +177,6 @@ getTimeseriesID = function(parameterType, stationNumber, tsName) {
 #'                                      'Quality Code',
 #'                                      'Interpolation Type'))
 #' }
-#'
 getTimeseriesValues = function(tsID, startDate, endDate, returnFields) {
 
   params = list('request'      = 'getTimeseriesValues',

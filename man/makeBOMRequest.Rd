@@ -20,8 +20,8 @@ A parameter list is passed to make request and the JSON return is parsed dependi
 on what is requested. This function can be used if you want to build your own JSON queries.
 }
 \examples{
-\dontrun{
 # Getting the stations for Water Course Discharge
+\dontrun{
 params = list('request' = 'getStationList',
               'parameterType_name' = 'Water Course Discharge',
               'returnfields' = paste(c('station_name',

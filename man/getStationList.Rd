@@ -4,7 +4,7 @@
 \alias{getStationList}
 \title{Retrieve water observation stations}
 \usage{
-getStationList()
+getStationList(parameterType, stationNumber, returnFields)
 }
 \arguments{
 \item{parameterType}{The parameter for the station request (e.g. Water Course Discharge,
@@ -28,14 +28,12 @@ details of those stations. `returnFields` can be customised to return various da
 the stations.
 }
 \examples{
-\dontrun{
 # Get all Water Course Discharge Stations
 getStationList()
-Just the details for Cotter River at Gingera
+# Just the details for Cotter River at Gingera
 getStationList(stationNumber='410730')
-Rainfall stations
+# Rainfall stations
 getStationList(parameterType = 'Rainfall')
-}
 
 }
 \author{

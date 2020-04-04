@@ -40,5 +40,4 @@ getTimeseriesValues(timeseriesID$ts_id,
                                      'Quality Code',
                                      'Interpolation Type'))
 }
-
 }

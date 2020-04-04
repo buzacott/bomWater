@@ -4,10 +4,10 @@
 \alias{parameters}
 \title{Available water parameters}
 \usage{
-parameters()
+parameters(pars)
 }
 \arguments{
-\item{x}{Optional: if empty all available parameters will be returned. Alternatively, a vector
+\item{pars}{Optional: if empty all available parameters will be returned. Alternatively, a vector
 of the continuous or discrete parameters can be requested.}
 }
 \value{

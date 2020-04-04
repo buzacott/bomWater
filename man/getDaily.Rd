@@ -21,9 +21,9 @@ a list of available parameters}
 
 \item{stationNumber}{The AWRC station number.}
 
-\item{startDate}{Start date formatted as a string or date class (YYYY-MM-DD)}
+\item{startDate}{Start date formatted as a string or date class (YYYY-MM-DD).}
 
-\item{endDate}{End date formatted as a string or date class (YYYY-MM-DD)}
+\item{endDate}{End date formatted as a string or date class (YYYY-MM-DD).}
 
 \item{var}{The daily variable of interest. Valid inputs are `mean`, `min`, `max` for continuous series
 such as discharge and `total` for discrete series such as rainfall and evaporation.}
@@ -47,48 +47,27 @@ is generally the mean for most variables, except for rainfall and evaporation wh
 This function returns a formatted timeseries from Water Data Online.
 }
 \details{
-This function returns a timeseries within the chosen date window. The units of the timeseries values are as per
-Water Data Online and can be viewed on page 39 of the Water Data Online SOS manual (linked in See Also below).
-
-The following parameters (\code{parameterType}) can be requested:
-\itemize{
-\item Water Course Discharge
-\item Water Course Level
-\item Storage Volume
-\item Storage Level
-\item Ground Water Level
-\item Rainfall
-\item Evaporation
-\item Dry Air Temperature
-\item Relative Humidity
-\item Wind Speed
-\item Electrical conductivity at 25C
-\item Turbidity
-\item Water pH
-\item Water Temperature
-}
+For the parameters (and their units) that can be requested, see \link{parameters}. More information can be
+found in the Water Data Online SOS manual (URL in See Also below).
 }
 \examples{
-\dontrun{
-getHourlyData(parameterType = 'Water Course Discharge',
+getHourly(parameterType = 'Water Course Discharge',
               stationNumber = '410730',
               startDate     = '2020-01-01',
               endDate       = '2020-01-31')
-}
-\dontrun{
-getDailyData(parameterType = 'Water Course Discharge',
+
+getDaily(parameterType = 'Water Course Discharge',
              stationNumber = '410730',
              startDate     = '2020-01-01',
              endDate       = '2020-01-31',
              var           = 'Mean',
              aggregation   = '09HR')
-}
-\dontrun{
+
 getYearly(parameterType = 'Rainfall',
           stationNumber = '570946',
-          startYear     = 2016,
-          endYear       = 2020)
-}
+          startDate     = 2016,
+          endDate       = 2020)
+
 }
 \seealso{
 \url{http://www.bom.gov.au/waterdata/}

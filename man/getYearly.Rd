@@ -4,7 +4,7 @@
 \alias{getYearly}
 \title{Get formatted timeseries data}
 \usage{
-getYearly(parameterType, stationNumber, startYear, endYear, tz, returnFields)
+getYearly(parameterType, stationNumber, startDate, endDate, tz, returnFields)
 }
 \arguments{
 \item{parameterType}{The water data parameter type (e.g. Water Course Discharge). See below for
@@ -12,16 +12,16 @@ a list of available parameters}
 
 \item{stationNumber}{The AWRC station number.}
 
+\item{startDate}{Start date (formatted as YYYY-MM-DD) or just the year (YYYY)}
+
+\item{endDate}{End date (formatted as YYYY-MM-DD) or just the year (YYYY)}
+
 \item{tz}{Optional: the desired time zone for the output timeseries. Input must be an Olson Name
 (see \code{OlsonNames()}). By default the the timeseries is returned in an offset timezone
 (e.g. \code{Etc/GMT-10} for NSW) as the timeseries do not observe DST.}
 
 \item{returnFields}{Optional: columns to be returned from Water Data Online. By default Timestamp
 Value and Quality Code are returned.}
-
-\item{startDate}{Start date formatted as a string or date class (YYYY-MM-DD)}
-
-\item{endDate}{End date formatted as a string or date class (YYYY-MM-DD)}
 }
 \value{
 A tibble with the requested return fields, which by default are \code{Timestamp}, \code{Value} and \verb{Quality Code}.
@@ -32,48 +32,27 @@ is generally the mean for most variables, except for rainfall and evaporation wh
 This function returns a formatted timeseries from Water Data Online.
 }
 \details{
-This function returns a timeseries within the chosen date window. The units of the timeseries values are as per
-Water Data Online and can be viewed on page 39 of the Water Data Online SOS manual (linked in See Also below).
-
-The following parameters (\code{parameterType}) can be requested:
-\itemize{
-\item Water Course Discharge
-\item Water Course Level
-\item Storage Volume
-\item Storage Level
-\item Ground Water Level
-\item Rainfall
-\item Evaporation
-\item Dry Air Temperature
-\item Relative Humidity
-\item Wind Speed
-\item Electrical conductivity at 25C
-\item Turbidity
-\item Water pH
-\item Water Temperature
-}
+For the parameters (and their units) that can be requested, see \link{parameters}. More information can be
+found in the Water Data Online SOS manual (URL in See Also below).
 }
 \examples{
-\dontrun{
-getHourlyData(parameterType = 'Water Course Discharge',
+getHourly(parameterType = 'Water Course Discharge',
               stationNumber = '410730',
               startDate     = '2020-01-01',
               endDate       = '2020-01-31')
-}
-\dontrun{
-getDailyData(parameterType = 'Water Course Discharge',
+
+getDaily(parameterType = 'Water Course Discharge',
              stationNumber = '410730',
              startDate     = '2020-01-01',
              endDate       = '2020-01-31',
              var           = 'Mean',
              aggregation   = '09HR')
-}
-\dontrun{
+
 getYearly(parameterType = 'Rainfall',
           stationNumber = '570946',
-          startYear     = 2016,
-          endYear       = 2020)
-}
+          startDate     = 2016,
+          endDate       = 2020)
+
 }
 \seealso{
 \url{http://www.bom.gov.au/waterdata/}
