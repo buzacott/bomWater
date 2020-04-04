@@ -2,7 +2,7 @@
 
 This `R` package grabs data from the Australian Bureau of Meteorology Water Data online (http://bom.gov.au/waterdata/) via the WISKI API.
 
-Several functions have been written to retreive the quality checked timeseries. These are:
+Several functions have been written to retrieve the quality checked timeseries. These are:
 
 - `getAsStored`
 - `getHourly`
