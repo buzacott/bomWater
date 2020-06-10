@@ -43,6 +43,12 @@ You can install `bomWater` directly from this repo using `devtools`:
 devtools::install_github('https://github.com/buzacott/bomWater')
 ```
 
+### Copyright
+
+All code is licensed MIT.
+
+The license and copyright for the data can be viewed under the copyright tab at http://www.bom.gov.au/waterdata/. More information about the Bureau of Meteorology copyright can be found at http://www.bom.gov.au/other/copyright.shtml.
+
 ### Examples
 
 ```r
