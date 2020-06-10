@@ -2,7 +2,7 @@
 
 This `R` package grabs data from the Australian Bureau of Meteorology Water Data online (http://bom.gov.au/waterdata/) via the WISKI API.
 
-Several functions have been written to retrieve the quality checked timeseries. These are:
+Several functions have been written to retrieve quality checked timeseries. These are:
 
 - `getAsStored`
 - `getHourly`
@@ -40,7 +40,7 @@ The SOS2 manual can be consulted for the units of the different timeseries, as w
 You can install `bomWater` directly from this repo using `devtools`:
 
 ```r
-devtools::install_github('https://github.com/a-buz/bomWater')
+devtools::install_github('https://github.com/buzacott/bomWater')
 ```
 
 ### Examples

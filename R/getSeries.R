@@ -5,7 +5,7 @@
 getTimeseries = function(parameterType, stationNumber, startDate, endDate, tz, returnFields, tsName) {
 
   # Check date input is valid
-  if(anyNA(lubridate::as_date(c(startDate, endDate), '%Y-%m-%d', tz=''))) {
+  if(anyNA(lubridate::as_date(c(startDate, endDate), '%Y-%m-%d', tz=tz))) {
     stop('Dates must be formatted as %Y-%m-%d (e.g. 2000-01-01)')
   }
 
@@ -29,7 +29,7 @@ getTimeseries = function(parameterType, stationNumber, startDate, endDate, tz, r
                                  stationNumber,
                                  tsName)
 
-  timeSeriesValues = getTimeseriesValues(timeseriesID$ts_id,
+  timeSeriesValues = getTimeseriesValues(timeseriesID$ts_id[1],
                                          startDate,
                                          endDate,
                                          returnFields)
