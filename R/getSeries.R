@@ -43,10 +43,6 @@ getTimeseries = function(parameterType, stationNumber, startDate, endDate, tz, r
   timeSeriesValues$Timestamp = lubridate::as_datetime(timeSeriesValues$Timestamp)
   timeSeriesValues$Value = as.numeric(timeSeriesValues$Value)
   timeSeriesValues$`Quality Code` = as.integer(timeSeriesValues$`Quality Code`)
-  # timeSeriesValues = timeSeriesValues %>%
-  #   dplyr::mutate(Timestamp = lubridate::as_datetime(.data$Timestamp),
-  #                 Value = as.numeric(.data$Value),
-  #                 `Quality Code` = as.integer(.data.$`Quality Code`))
   attributes(timeSeriesValues$Timestamp)$tzone = tz
 
   return(timeSeriesValues)

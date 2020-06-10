@@ -42,8 +42,7 @@ makeBOMRequest = function(params) {
     if(json[1]=='No matches.') stop('No parameterType and stationNumber match found')
 
     colnames(json) = json[1,]
-    tbl = tibble::as_tibble(json) %>%
-      dplyr::slice(-1)
+    tbl = dplyr::slice(tibble::as_tibble(json), -1)
 
   } else if(params$request == 'getTimeseriesValues') {
 
