@@ -22,13 +22,13 @@ knitr::opts_chunk$set(
 
 ## Using bomWater
 
-A typical workflow begins by querying station information using `getStationList()` with a specific parameter type. The function `parameters()` returns all the parameters that can be retrieved using `bomWater`. By default `getStationList()` returns all stations for Water Course Discharge and other parameters can be specified with the argument `parameterType`. Once the station number of interest is known, it can be used to retrieve quality-checked timeseries using the functions:
+A typical workflow begins by querying station information using `get_station_list()` with a specific parameter type. The function `parameters()` returns all the parameters that can be retrieved using `bomWater`. By default `get_station_list()` returns all stations for Water Course Discharge and other parameters can be specified with the argument `parameter_type`. Once the station number of interest is known, it can be used to retrieve quality-checked timeseries using the functions:
 
-* `getHourly()`: retrieves hourly data
-* `getDaily()`: retrieves daily data
-* `getMonthly()`: retrieves monthly data
-* `getYearly()`: retrieves annual data
-* `getAsStored()`: retrieves data as stored by BoM
+* `get_hourly()`: retrieves hourly data
+* `get_daily()`: retrieves daily data
+* `get_monthly()`: retrieves monthly data
+* `get_yearly()`: retrieves annual data
+* `get_as_stored()`: retrieves data as stored by BoM
 
 Timeseries that are based on aggregated data return the mean by default, however other variables such as min and max are often available. The functions will return a `tibble` with three columns: Timestamp, Value and Quality Code. 
 
@@ -88,9 +88,9 @@ Returns a vector of parameter types.
 parameters()
 ```
 
-## Using getStationList()
+## Using get_station_list()
 
-'getStationList' queries Water Data Online and returns station details. Queries can be input with the desired 'parameterType' to find all the stations on record. If you already have a vector of station numbers, you can pass the vector to 'stationNumber' and return the details of those stations. 'returnFields' can be customised to return various data about the stations.
+'get_station_list' queries Water Data Online and returns station details. Queries can be input with the desired 'parameter_type' to find all the stations on record. If you already have a vector of station numbers, you can pass the vector to 'station_number' and return the details of those stations. 'returnFields' can be customised to return various data about the stations.
 
 ### Results
 
@@ -100,15 +100,15 @@ With the default return fields, a tibble with columns station_name, station_no, 
 
 ```{r}
 # Get a list of groundwater bores available from water data online
-getStationList(parameterType = 'Ground Water Level')
+get_station_list(parameter_type = "Ground Water Level")
 
 # Return information for a single station and customise return fields
-getStationList(stationNumber = '410730')
+get_station_list(station_number = "410730")
 ```
 
-## Using getHourly()
+## Using get_hourly()
 
-`getHourly` returns hourly data. Only Water Course Discharge, Water Course Level, Storage Level and Storage Volume can be requested using `getHourly`.
+`get_hourly` returns hourly data. Only Water Course Discharge, Water Course Level, Storage Level and Storage Volume can be requested using `get_hourly`.
 
 ### Result
 
@@ -118,31 +118,37 @@ Returns a tibble with Timestamp, Value and Quality Code.
 
 ```{r}
 # Cotter River at Gingera
-getHourly(parameterType = 'Water Course Discharge',
-          stationNumber = '410730',
-          startDate     = '2020-01-01',
-          endDate       = '2020-01-31')
+get_hourly(
+  parameter_type = "Water Course Discharge",
+  station_number = "410730",
+  start_date = "2020-01-01",
+  end_date = "2020-01-31"
+)
 
 # Corin Reservoir
-getHourly(parameterType = 'Storage Volume',
-          stationNumber = '410742',
-          startDate     = '2020-01-01',
-          endDate       = '2020-01-31')
+get_hourly(
+  parameter_type = "Storage Volume",
+  station_number = "410742",
+  start_date = "2020-01-01",
+  end_date = "2020-01-31"
+)
 ```
 
 An example of plotting the data:
 
 ```{r}
-corin = getHourly(parameterType = 'Storage Volume',
-                  stationNumber = '410742',
-                  startDate     = '2020-01-01',
-                  endDate       = '2020-01-31')
+corin <- get_hourly(
+  parameter_type = "Storage Volume",
+  station_number = "410742",
+  start_date = "2020-01-01",
+  end_date = "2020-01-31"
+)
 ggplot(corin, aes(Timestamp, Value)) +
   geom_line() +
-  labs(x='Time', y='Storage Volume (ML)')
+  labs(x = "Time", y = "Storage Volume (ML)")
 ```
 
-## Using getDaily()
+## Using get_daily()
 
 Retrieves timeseries at a daily timestep. For continuous data, the daily mean (default), max, and min can be returned by specifying the `var` argument. Daily totals are returned for discrete parameters (e.g. rainfall and evaporation). Timeseries aggregated between 9am to 9am for Rainfall and Water Course Discharge can be retrieved using the `aggregation` argument to match the standard BoM rainfall reporting.
 
@@ -154,27 +160,33 @@ A tibble with columns Timestamp, Value and Quality Code.
 
 ```{r}
 # Daily mean streamflow from Cotter River at Gingera (in m3/s) between 09-09
-getDaily(parameterType = 'Water Course Discharge',
-             stationNumber = '410730',
-             startDate     = '2020-01-01',
-             endDate       = '2020-01-31',
-             aggregation   = '09HR')
+get_daily(
+  parameter_type = "Water Course Discharge",
+  station_number = "410730",
+  start_date     = "2020-01-01",
+  end_date       = "2020-01-31",
+  aggregation    = "09HR"
+)
 
 # Daily max, only available over the standard day
-getDaily(parameterType = 'Water Course Discharge',
-         stationNumber = '410730',
-         startDate     = '2020-01-01',
-         endDate       = '2020-01-31',
-         var           = 'Max')
+get_daily(
+  parameter_type = "Water Course Discharge",
+  station_number = "410730",
+  start_date     = "2020-01-01",
+  end_date       = "2020-01-31",
+  var            = "max"
+)
 
 # Daily mean wind speed at Corin Dam
-getDaily(parameterType = 'Wind Speed',
-         stationNumber = '570947',
-         startDate     = '2020-01-01',
-         endDate       = '2020-01-31')
+get_daily(
+  parameter_type = "Wind Speed",
+  station_number = "570947",
+  start_date     = "2020-01-01",
+  end_date       = "2020-01-31"
+)
 ```
 
-## Using getMonthly()
+## Using get_monthly()
 
 Retrieves timeseries at a monthly timestep. Monthly totals are returned for discrete parameters (e.g. rainfall and evaporation), while the mean rate is returned for continuous parameters.
 
@@ -186,26 +198,32 @@ A tibble with columns Timestamp, Value and Quality Code.
 
 ```{r}
 # Monthly total rainfall in mm at Cotter Hut
-getMonthly(parameterType = 'Rainfall',
-           stationNumber = '570946',
-           startDate     = '2019-01-01',
-           endDate       = '2019-12-31')
+get_monthly(
+  parameter_type = "Rainfall",
+  station_number = "570946",
+  start_date     = "2019-01-01",
+  end_date       = "2019-12-31"
+)
 
 # Monthly mean streamflow rate m3/s at Cotter River at Gingera
-getMonthly(parameterType = 'Water Course Discharge',
-           stationNumber = '410730',
-           startDate     = '2019-01-01',
-           endDate       = '2019-12-31')
+get_monthly(
+  parameter_type = "Water Course Discharge",
+  station_number = "410730",
+  start_date     = "2019-01-01",
+  end_date       = "2019-12-31"
+)
 
 # Monthly evaporation at Blowering Dam
-getMonthly(parameterType = 'Evaporation',
-           stationNumber = '410102',
-           startDate     = '2019-01-01',
-           endDate       = '2019-12-31')
+get_monthly(
+  parameter_type = "Evaporation",
+  station_number = "410102",
+  start_date     = "2019-01-01",
+  end_date       = "2019-12-31"
+)
 # No data
 ```
 
-## Using getYearly()
+## Using get_yearly()
 
 Retrieves timeseries at an annual timestep. Annual totals are returned for discrete parameters (e.g. rainfall and evaporation), while the mean rate is returned for continuous parameters.
 
@@ -217,18 +235,20 @@ A tibble with columns Timestamp, Value and Quality Code.
 
 ```{r}
 # Annual rainfall at Berthong in Cootamundra
-berthong = getYearly(parameterType = 'Rainfall',
-                     stationNumber = '41000207',
-                     startDate     = '2010-01-01',
-                     endDate       = '2019-12-31')
+berthong <- get_yearly(
+  parameter_type = "Rainfall",
+  station_number = "41000207",
+  start_date     = "2010-01-01",
+  end_date       = "2019-12-31"
+)
 
 # Example plot
 ggplot(berthong, aes(Timestamp, Value)) +
   geom_col() +
-  labs(x='Time', y='Rainfall (mm/year)')
+  labs(x = "Time", y = "Rainfall (mm/year)")
 ```
 
-## Using getAsStored()
+## Using get_as_stored()
 
 Retrieves timeseries as stored by the BoM. Results could vary.
 
@@ -240,10 +260,12 @@ A tibble with columns Timestamp, Value and Quality Code.
 
 ```{r}
 # Annual rainfall at Berthong in Cootamundra
-berthong = getAsStored(parameterType = 'Rainfall',
-                       stationNumber = '41000207',
-                       startDate     = '2019-01-01',
-                       endDate       = '2019-12-31')
+berthong <- get_as_stored(
+  parameter_type = "Rainfall",
+  station_number = "41000207",
+  start_date     = "2019-01-01",
+  end_date       = "2019-12-31"
+)
 berthong
 ```
 

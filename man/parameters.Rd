@@ -7,14 +7,16 @@
 parameters(pars)
 }
 \arguments{
-\item{pars}{Optional: if empty all available parameters will be returned. Alternatively, a vector
-of the continuous or discrete parameters can be requested.}
+\item{pars}{Optional: if empty all available parameters will be returned.
+Alternatively, a vector of the continuous or discrete parameters can be
+requested.}
 }
 \value{
 A vector of parameters.
 }
 \description{
-\code{parameters} returns a vector of parameters that can be retrieved from Water Data Online.
+\code{parameters} returns a vector of parameters that can be retrieved from
+Water Data Online.
 }
 \details{
 The units of the parameters are as follows:
@@ -37,10 +39,12 @@ The units of the parameters are as follows:
 }
 \examples{
 parameters()
-parameters('continuous')
-parameters('discrete')
+parameters("continuous")
+parameters("discrete")
 }
 \seealso{
 \url{http://www.bom.gov.au/waterdata/}
-\url{http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor\%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20Online\%20v1.0.1.pdf}
+\url{http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor
+    \%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20On
+    line\%20v1.0.1.pdf}
 }
