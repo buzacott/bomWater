@@ -11,8 +11,8 @@ make_bom_request(params)
 }
 \value{
 A tibble is returned with the columns depending on the request. For
-\code{getTimeSeries} requests, a tibble with zero rows is returned if the
- request if there is no data available for that query.
+\code{get_timeseries} requests, a tibble with zero rows is returned
+if there is no data available for that query.
 }
 \description{
 This function queries the Bureau of Meteorology Water Data KISTERS API.

@@ -3,9 +3,13 @@
 #' time series (e.g. the forecasting timeseries)
 #' @param ts_name The timeseries name (e.g. DMQaQc.Merged.DailyMean.24HR) that
 #' is desired.
-#' @export
-get_timeseries <- function(parameter_type, station_number, start_date,
-                           end_date, tz, return_fields, ts_name) {
+get_timeseries <- function(parameter_type,
+                           station_number,
+                           start_date,
+                           end_date,
+                           tz,
+                           return_fields,
+                           ts_name) {
 
   # Check date input is valid
   if (anyNA(lubridate::as_date(c(start_date, end_date), "%Y-%m-%d", tz = tz))) {
@@ -69,6 +73,15 @@ get_timeseries <- function(parameter_type, station_number, start_date,
 }
 
 #' @template timeseriesDocs
+#' @examples
+#' # Groundwater level as stored by the BoM
+#' # PLUMB RD @ NARRABRI'
+#' get_as_stored(
+#'   parameter_type = "Ground Water Level",
+#'   station_number = "GW971623.3.3",
+#'   start_date = "2020-03-01",
+#'   end_date = "2020-03-01"
+#' )
 #' @export
 get_as_stored <- function(parameter_type,
                           station_number,
@@ -101,6 +114,14 @@ get_as_stored <- function(parameter_type,
 }
 
 #' @template timeseriesDocs
+#' @examples
+#' # Hourly streamflow Cotter River at Gingera Gauge
+#' get_hourly(
+#'   parameter_type = "Water Course Discharge",
+#'   station_number = "410730",
+#'   start_date = "2020-01-01",
+#'   end_date = "2020-01-31"
+#' )
 #' @export
 get_hourly <- function(parameter_type,
                        station_number,
@@ -145,6 +166,35 @@ get_hourly <- function(parameter_type,
 #' @param aggregation Whether the data is to be aggregated midnight to
 #' midnight (`24HR`) or from 9am-9am (`09HR`). The default is `24HR`. `09HR`
 #' is only available for mean discharge and total rainfall and evaporation.
+#' @examples
+#' # Download daily mean aggregated over the standard day
+#' get_daily(
+#'   parameter_type = "Water Course Discharge",
+#'   station_number = "410730",
+#'   start_date = "2020-01-01",
+#'   end_date = "2020-01-31",
+#'   var = "mean",
+#'   aggregation = "24HR"
+#' )
+#' # Download daily mean aggregated between 9am to 9am
+#' get_daily(
+#'   parameter_type = "Water Course Discharge",
+#'   station_number = "410730",
+#'   start_date = "2020-01-01",
+#'   end_date = "2020-01-31",
+#'   var = "mean",
+#'   aggregation = "09HR"
+#' )
+#'
+#' # Download the daily max over the standard day
+#' get_daily(
+#'   parameter_type = "Water Course Discharge",
+#'   station_number = "410730",
+#'   start_date = "2020-01-01",
+#'   end_date = "2020-01-31",
+#'   var = "max",
+#'   aggregation = "24HR"
+#' )
 #' @export
 get_daily <- function(parameter_type,
                       station_number,
@@ -222,6 +272,14 @@ get_daily <- function(parameter_type,
 }
 
 #' @template timeseriesDocs
+#' @examples
+#' # Monthly average dry air temperature at Corin Dam
+#' get_monthly(
+#'   parameter_type = "Dry Air Temperature",
+#'   station_number = "570947",
+#'   start_date = "2016-01-01",
+#'   end_date = "2016-06-01"
+#' )
 #' @export
 get_monthly <- function(parameter_type,
                         station_number,
@@ -266,6 +324,14 @@ get_monthly <- function(parameter_type,
 #' @param start_date Start date (formatted as YYYY-MM-DD) or just the
 #' year (YYYY)
 #' @param end_date End date (formatted as YYYY-MM-DD) or just the year (YYYY)
+#' @examples
+#' # Download annual rainfall for Cotter Hut
+#' get_yearly(
+#'   parameter_type = "Rainfall",
+#'   station_number = "570946",
+#'   start_date = 2016,
+#'   end_date = 2020
+#' )
 #' @export
 get_yearly <- function(parameter_type,
                        station_number,
@@ -337,10 +403,8 @@ get_yearly <- function(parameter_type,
 #' * Wind Speed (m/s)
 #' @md
 #' @seealso
-#' \url{http://www.bom.gov.au/waterdata/}
-#' \url{http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor
-#'     \%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20On
-#'     line\%20v1.0.1.pdf}
+#' * \url{http://www.bom.gov.au/waterdata/}
+#' * \url{http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor\%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20Online\%20v1.0.1.pdf}
 #' @examples
 #' parameters()
 #' parameters("continuous")
@@ -355,7 +419,7 @@ parameters <- function(pars) {
     "Turbidity",
     "pH",
     "Water Temperature",
-    "Groundwater Level",
+    "Ground Water Level",
     "Water Course Level",
     "Water Course Discharge",
     "Storage Level",

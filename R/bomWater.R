@@ -7,8 +7,8 @@
 #' @param params A named list of parameters.
 #' @return
 #' A tibble is returned with the columns depending on the request. For
-#' \code{getTimeSeries} requests, a tibble with zero rows is returned if the
-#'  request if there is no data available for that query.
+#' \code{get_timeseries} requests, a tibble with zero rows is returned
+#' if there is no data available for that query.
 #' @author Alexander Buzacott
 #' @examples
 #' # Getting the stations for Water Course Discharge
@@ -37,7 +37,8 @@ make_bom_request <- function(params) {
     "format" = "json"
   )
 
-  r <- tryCatch({
+  r <- tryCatch(
+    {
       r <- httr::GET(bom_url, query = c(base_params, params))
       httr::stop_for_status(r, task = "request water data form BoM")
       httr::warn_for_status(r, task = "request water data from BoM")

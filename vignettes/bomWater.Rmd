@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-`bomWater` provides an interface to the Australian Bureau of Meteorology Water Data online (http://bom.gov.au/waterdata/) web service. As part of the Water Act 2007, the BoM is required to collect Australian water information and make it available to the public. This provides a single and convenient source of water data for all states and territories. Several hydrological and meteorological quality checked timeseries are available through Water Data online and `bomWater` provides several functions to access these timeseries. 
+`bomWater` provides an interface to the Australian Bureau of Meteorology Water Data online (http://bom.gov.au/waterdata/) web service. As part of the Water Act 2007, the BoM is required to collect Australian water information and make it available to the public. This provides a single and convenient source of water data for all states and territories. Several hydrological and meteorological quality checked timeseries are available through Water Data online and `bomWater` provides several functions to access these timeseries.
 
 ## Using bomWater
 
@@ -30,7 +30,7 @@ A typical workflow begins by querying station information using `get_station_lis
 * `get_yearly()`: retrieves annual data
 * `get_as_stored()`: retrieves data as stored by BoM
 
-Timeseries that are based on aggregated data return the mean by default, however other variables such as min and max are often available. The functions will return a `tibble` with three columns: Timestamp, Value and Quality Code. 
+Timeseries that are based on aggregated data return the mean by default, however other variables such as min and max are often available. The functions will return a `tibble` with three columns: Timestamp, Value and Quality Code.
 
 ### Parameters
 
@@ -90,7 +90,7 @@ parameters()
 
 ## Using get_station_list()
 
-'get_station_list' queries Water Data Online and returns station details. Queries can be input with the desired 'parameter_type' to find all the stations on record. If you already have a vector of station numbers, you can pass the vector to 'station_number' and return the details of those stations. 'returnFields' can be customised to return various data about the stations.
+'get_station_list' queries Water Data Online and returns station details. Queries can be input with the desired 'parameter_type' to find all the stations on record. If you already have a vector of station numbers, you can pass the vector to 'station_number' and return the details of those stations. 'return_fields' can be customised to return various data about the stations.
 
 ### Results
 
@@ -272,4 +272,3 @@ berthong
 ## Copyright
 
 The license and copyright for the data can be viewed under the copyright tab at http://www.bom.gov.au/waterdata/. More information about the Bureau of Meteorology copyright can be found at http://www.bom.gov.au/other/copyright.shtml.
-
