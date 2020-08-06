@@ -1,0 +1,255 @@
+---
+title: "bomWater"
+author: "Alexander Buzacott"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{bomWater}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+`bomWater` provides an interface to the Australian Bureau of Meteorology Water Data online (http://bom.gov.au/waterdata/) web service. As part of the Water Act 2007, the BoM is required to collect Australian water information and make it available to the public. This provides a single and convenient source of water data for all states and territories. Several hydrological and meteorological quality checked timeseries are available through Water Data online and `bomWater` provides several functions to access these timeseries. 
+
+## Using bomWater
+
+A typical workflow begins by querying station information using `getStationList()` with a specific parameter type. The function `parameters()` returns all the parameters that can be retrieved using `bomWater`. By default `getStationList()` returns all stations for Water Course Discharge and other parameters can be specified with the argument `parameterType`. Once the station number of interest is known, it can be used to retrieve quality-checked timeseries using the functions:
+
+* `getHourly()`: retrieves hourly data
+* `getDaily()`: retrieves daily data
+* `getMonthly()`: retrieves monthly data
+* `getYearly()`: retrieves annual data
+* `getAsStored()`: retrieves data as stored by BoM
+
+Timeseries that are based on aggregated data return the mean by default, however other variables such as min and max are often available. The functions will return a `tibble` with three columns: Timestamp, Value and Quality Code. 
+
+### Parameters
+
+The following Water Data Online variables can be accessed using these functions:
+
+| Parameter                      | Units  |
+| ------------------------------ | ------ |
+| Water Course Discharge         | m3/s   |
+| Water Course Level             | m      |
+| Electrical conductivity at 25C | µS/cm  |
+| Turbidity                      | NTU    |
+| pH                             | pH     |
+| Water Temperature              | ºC     |
+| Storage Volume                 | ML     |
+| Storage Level                  | m      |
+| Ground Water Level             | m      |
+| Rainfall                       | mm     |
+| Evaporation                    | mm     |
+| Dry Air Temperature            | ºC     |
+| Relative Humidity              | %      |
+| Wind Speed                     | m/s    |
+
+### Quality codes
+
+The following table is from the ([BoM SOS2 manual](http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor\%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20Online\%20v1.0.1.pdf)) (6.3.3, pg 41) and summarises the quality codes.
+
+| SOS2 Qualifier | Quality code | Description |
+| -------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 10  | A | The record set is the best available given the technologies, techniques and monitoring objectives at the time of classification. |
+| 90  | B | The record set is compromised in its ability to truly represent the parameter. |
+| 110 | C | The record set is an estimate. |
+| 140 | E | The record set's ability to truly represent the monitored parameter is not known. |
+| 210 | F | The record set is not of release quality or contains missing data. |
+
+## Load packages
+
+Load `bomWater` as well as `ggplot` to make some plots.
+
+```{r setup}
+library(bomWater)
+library(ggplot2)
+```
+
+## Using parameters()
+
+The parameter names can be retrieved from `bomWater` using `parameters()`. `parameters()` takes no argument. Make sure the formatting of the parameter types is as returned by this function otherwise an error may be raised.
+
+### Results
+
+Returns a vector of parameter types.
+
+### Example
+
+```{r}
+parameters()
+```
+
+## Using getStationList()
+
+'getStationList' queries Water Data Online and returns station details. Queries can be input with the desired 'parameterType' to find all the stations on record. If you already have a vector of station numbers, you can pass the vector to 'stationNumber' and return the details of those stations. 'returnFields' can be customised to return various data about the stations.
+
+### Results
+
+With the default return fields, a tibble with columns station_name, station_no, station_id, station_latitude, station_longitude.
+
+### Example
+
+```{r}
+# Get a list of groundwater bores available from water data online
+getStationList(parameterType = 'Ground Water Level')
+
+# Return information for a single station and customise return fields
+getStationList(stationNumber = '410730')
+```
+
+## Using getHourly()
+
+`getHourly` returns hourly data. Only Water Course Discharge, Water Course Level, Storage Level and Storage Volume can be requested using `getHourly`.
+
+### Result
+
+Returns a tibble with Timestamp, Value and Quality Code.
+
+### Example
+
+```{r}
+# Cotter River at Gingera
+getHourly(parameterType = 'Water Course Discharge',
+          stationNumber = '410730',
+          startDate     = '2020-01-01',
+          endDate       = '2020-01-31')
+
+# Corin Reservoir
+getHourly(parameterType = 'Storage Volume',
+          stationNumber = '410742',
+          startDate     = '2020-01-01',
+          endDate       = '2020-01-31')
+```
+
+An example of plotting the data:
+
+```{r}
+corin = getHourly(parameterType = 'Storage Volume',
+                  stationNumber = '410742',
+                  startDate     = '2020-01-01',
+                  endDate       = '2020-01-31')
+ggplot(corin, aes(Timestamp, Value)) +
+  geom_line() +
+  labs(x='Time', y='Storage Volume (ML)')
+```
+
+
+## Using getDaily()
+
+Retrieves timeseries at a daily timestep. For continuous data, the daily mean (default), max, and min can be returned by specifying the `var` argument. Daily totals are returned for discrete parameters (e.g. rainfall and evaporation). Timeseries aggregated between 9am to 9am for Rainfall and Water Course Discharge can be retrieved using the `aggregation` argument to match the standard BoM rainfall reporting.
+
+### Result
+
+A tibble with columns Timestamp, Value and Quality Code.
+
+### Examples
+
+```{r}
+# Daily mean streamflow from Cotter River at Gingera (in m3/s) between 09-09
+getDaily(parameterType = 'Water Course Discharge',
+             stationNumber = '410730',
+             startDate     = '2020-01-01',
+             endDate       = '2020-01-31',
+             aggregation   = '09HR')
+
+# Daily max, only available over the standard day
+getDaily(parameterType = 'Water Course Discharge',
+         stationNumber = '410730',
+         startDate     = '2020-01-01',
+         endDate       = '2020-01-31',
+         var           = 'Max')
+
+# Daily mean wind speed at Corin Dam
+getDaily(parameterType = 'Wind Speed',
+         stationNumber = '570947',
+         startDate     = '2020-01-01',
+         endDate       = '2020-01-31')
+```
+
+## Using getMonthly()
+
+Retrieves timeseries at a monthly timestep. Monthly totals are returned for discrete parameters (e.g. rainfall and evaporation), while the mean rate is returned for continuos parameters.
+
+### Result
+
+A tibble with columns Timestamp, Value and Quality Code.
+
+### Examples
+
+```{r}
+# Monthly total rainfall in mm at Cotter Hut
+getMonthly(parameterType = 'Rainfall',
+           stationNumber = '570946',
+           startDate     = '2019-01-01',
+           endDate       = '2019-12-31')
+
+# Monthly mean streamflow rate m3/s at Cotter River at Gingera
+getMonthly(parameterType = 'Water Course Discharge',
+           stationNumber = '410730',
+           startDate     = '2019-01-01',
+           endDate       = '2019-12-31')
+
+# Monthly evaporation at Blowering Dam
+getMonthly(parameterType = 'Evaporation',
+           stationNumber = '410102',
+           startDate     = '2019-01-01',
+           endDate       = '2019-12-31')
+# No data
+```
+
+## Using getYearly()
+
+Retrieves timeseries at an annual timestep. Annual totals are returned for discrete parameters (e.g. rainfall and evaporation), while the mean rate is returned for continuous parameters.
+
+### Result
+
+A tibble with columns Timestamp, Value and Quality Code.
+
+### Examples
+
+```{r}
+# Annual rainfall at Berthong in Cootamundra
+berthong = getYearly(parameterType = 'Rainfall',
+                     stationNumber = '41000207',
+                     startDate     = '2010-01-01',
+                     endDate       = '2019-12-31')
+
+# Example plot
+ggplot(berthong, aes(Timestamp, Value)) +
+  geom_col() +
+  labs(x='Time', y='Rainfall (mm/year)')
+```
+
+
+## Using getAsStored()
+
+Retrieves timeseries as stored by the BoM. Results could vary.
+
+### Result
+
+A tibble with columns Timestamp, Value and Quality Code.
+
+### Examples
+
+```{r}
+# Annual rainfall at Berthong in Cootamundra
+berthong = getAsStored(parameterType = 'Rainfall',
+                       stationNumber = '41000207',
+                       startDate     = '2019-01-01',
+                       endDate       = '2019-12-31')
+berthong
+```
+
+## Copyright
+
+The license and copyright for the data can be viewed under the copyright tab at http://www.bom.gov.au/waterdata/. More information about the Bureau of Meteorology copyright can be found at http://www.bom.gov.au/other/copyright.shtml.
+

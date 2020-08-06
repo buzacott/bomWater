@@ -34,16 +34,19 @@ getTimeseries = function(parameterType, stationNumber, startDate, endDate, tz, r
                                          endDate,
                                          returnFields)
 
-  # Get the tzone offset
-  if(is.null(tz)) {
-    tzOffset = stringr::str_sub(timeSeriesValues$Timestamp[1], -5, -4)
-    tz = paste0('Etc/GMT-', tzOffset) # For some reason a negative offset is ahead of UTC
-  }
+  # Only process data if it exists
+  if(nrow(timeSeriesValues)>0) {
+    # Get the tzone offset
+    if(is.null(tz)) {
+      tzOffset = stringr::str_sub(timeSeriesValues$Timestamp[1], -5, -4)
+      tz = paste0('Etc/GMT-', tzOffset) # For some reason a negative offset is ahead of UTC
+    }
 
-  timeSeriesValues$Timestamp = lubridate::as_datetime(timeSeriesValues$Timestamp)
-  timeSeriesValues$Value = as.numeric(timeSeriesValues$Value)
-  timeSeriesValues$`Quality Code` = as.integer(timeSeriesValues$`Quality Code`)
-  attributes(timeSeriesValues$Timestamp)$tzone = tz
+    timeSeriesValues$Timestamp = lubridate::as_datetime(timeSeriesValues$Timestamp)
+    timeSeriesValues$Value = as.numeric(timeSeriesValues$Value)
+    timeSeriesValues$`Quality Code` = as.integer(timeSeriesValues$`Quality Code`)
+    attributes(timeSeriesValues$Timestamp)$tzone = tz
+  }
 
   return(timeSeriesValues)
 }
