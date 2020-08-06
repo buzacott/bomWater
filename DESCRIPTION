@@ -6,6 +6,7 @@ Author: Alexander Buzacott
 Maintainer: Alexander Buzacott <abuz5257@uni.sydney.edu.au>
 Description: An R interface to the Australian Bureau of Meteorology Water Data Online web service.
 License: MIT + file LICENSE
+URL: https://github.com/buzacott/bomWater
 Encoding: UTF-8
 LazyData: true
 Depends:
@@ -21,5 +22,6 @@ RoxygenNote: 7.1.1
 Suggests: 
     knitr,
     rmarkdown,
-    ggplot2
+    ggplot2,
+    testthat
 VignetteBuilder: knitr
