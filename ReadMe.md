@@ -4,11 +4,11 @@ This `R` package grabs data from the Australian Bureau of Meteorology Water Data
 
 Several functions have been written to retrieve quality checked timeseries. These are:
 
-- `getAsStored`
-- `getHourly`
-- `getDaily`
-- `getMonthly`
-- `getYearly`
+- `get_as_stored()`
+- `get_hourly()`
+- `get_daily()`
+- `get_monthly()`
+- `get_yearly()`
 
 The following Water Data Online variables can be accessed using these functions:
 
@@ -31,7 +31,7 @@ The following Water Data Online variables can be accessed using these functions:
 
 Make sure formatting of the parameter types is as in the table above when making requests. The function `parameters()` can be used to retrieve this from within R.
 
-Station information can be queried using `getStationList`, as in the example below.
+Station information can be queried using `get_station_list()`, as in the example below.
 
 The SOS2 manual can be consulted for the units of the different timeseries, as well as the meanings of the different quality codes ([BoM WISKI manual](http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor\%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20Online\%20v1.0.1.pdf)).
 
@@ -55,10 +55,10 @@ The license and copyright for the data can be viewed under the copyright tab at 
 library(bomWater)
 
 # Daily streamflow from Cotter River at Gingera (in m3/s)
-cotterRiver = getDaily(parameterType = 'Water Course Discharge',
-                       stationNumber = '410730',
-                       startDate     = '2020-01-01',
-                       endDate       = '2020-01-31')
+cotter_river = get_daily(parameter_type = 'Water Course Discharge',
+                        station_number = '410730',
+                        start_date     = '2020-01-01',
+                        end_date       = '2020-01-31')
 
 cotterRiver
 # A tibble: 31 x 3
@@ -77,10 +77,10 @@ cotterRiver
 # … with 21 more rows
 
 # Monthly total rainfall in mm at Cotter Hut
-cotterHut = getMonthly(parameterType = 'Rainfall',
-                       stationNumber = '570946',
-                       startDate     = '2019-01-01',
-                       endDate       = '2019-12-31')
+cotter_hut = get_monthly(parameter_type = 'Rainfall',
+                         station_number = '570946',
+                         start_date     = '2019-01-01',
+                         end_date       = '2019-12-31')
 cotterHut
 # A tibble: 12 x 3
    Timestamp           Value `Quality Code`
@@ -99,7 +99,7 @@ cotterHut
 12 2019-12-01 00:00:00   8               10
 
 # Get a list of groundwater bore data available from water data online
-getStationList(parameterType = 'Ground Water Level')
+get_station_list(parameter_type = 'Ground Water Level')
 # A tibble: 4,433 x 5
    station_name station_no station_id station_latitude station_longitude
    <chr>        <chr>      <chr>      <chr>            <chr>            
