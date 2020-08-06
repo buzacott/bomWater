@@ -41,11 +41,11 @@ make_bom_request <- function(params) {
   json <- jsonlite::fromJSON(httr::content(r, "text"))
 
   if (params$request %in% c(
-    'getParameterList',
-    'getParameterTypeList',
-    'getSiteList',
-    'getStationList',
-    'getTimeseriesList'
+    "getParameterList",
+    "getParameterTypeList",
+    "getSiteList",
+    "getStationList",
+    "getTimeseriesList"
   )) {
     if (json[1] == "No matches.") {
       stop("No parameter type and station number match found")
@@ -107,7 +107,7 @@ get_station_list <- function(parameter_type, station_number, return_fields) {
   if (missing(parameter_type)) {
     parameter_type <- "Water Course Discharge"
   }
-  params[['parameterType_name']] = parameter_type
+  params[["parameterType_name"]] <- parameter_type
 
   if (!missing(station_number)) {
     # Support multiple stations
