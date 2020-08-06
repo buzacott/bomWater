@@ -58,22 +58,34 @@ For the parameters (and their units) that can be requested, see
 SOS manual (URL in See Also below).
 }
 \examples{
+# Download daily mean aggregated over the standard day
+get_daily(
+  parameter_type = "Water Course Discharge",
+  station_number = "410730",
+  start_date = "2020-01-01",
+  end_date = "2020-01-31",
+  var = "mean",
+  aggregation = "24HR"
+)
 # Download daily mean aggregated between 9am to 9am
-get_daily(parameter_type = 'Water Course Discharge',
-          station_number = '410730',
-          start_date     = '2020-01-01',
-          end_date       = '2020-01-31',
-          var            = 'mean',
-          aggregation    = '09HR')
-          #' # Download daily mean aggregated between 9am to 9am
+get_daily(
+  parameter_type = "Water Course Discharge",
+  station_number = "410730",
+  start_date = "2020-01-01",
+  end_date = "2020-01-31",
+  var = "mean",
+  aggregation = "09HR"
+)
 
 # Download the daily max over the standard day
-get_daily(parameter_type = 'Water Course Discharge',
-          station_number = '410730',
-          start_date     = '2020-01-01',
-          end_date       = '2020-01-31',
-          var            = 'max',
-          aggregation    = '24HR')
+get_daily(
+  parameter_type = "Water Course Discharge",
+  station_number = "410730",
+  start_date = "2020-01-01",
+  end_date = "2020-01-31",
+  var = "max",
+  aggregation = "24HR"
+)
 }
 \seealso{
 \itemize{

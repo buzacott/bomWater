@@ -50,10 +50,12 @@ SOS manual (URL in See Also below).
 \examples{
 # Groundwater level as stored by the BoM
 # PLUMB RD @ NARRABRI'
-get_as_stored(parameter_type = 'Ground Water Level',
-             station_number  = 'GW971623.3.3',
-             start_date      = '2020-03-01',
-             end_date        = '2020-03-01')
+get_as_stored(
+  parameter_type = "Ground Water Level",
+  station_number = "GW971623.3.3",
+  start_date = "2020-03-01",
+  end_date = "2020-03-01"
+)
 }
 \seealso{
 \itemize{

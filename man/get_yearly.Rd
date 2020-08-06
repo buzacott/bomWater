@@ -22,13 +22,7 @@ Discharge). See below for a list of available parameters}
 \item{start_date}{Start date (formatted as YYYY-MM-DD) or just the
 year (YYYY)}
 
-\item{end_date}{End date (formatted as YYYY-MM-DD) or just the year (YYYY)
-#' @examples
-# Download annual rainfall for Cotter Hut
-get_yearly(parameter_type = 'Rainfall',
-           station_number = '570946',
-           start_date     = 2016,
-           end_date       = 2020)}
+\item{end_date}{End date (formatted as YYYY-MM-DD) or just the year (YYYY)}
 
 \item{tz}{Optional: the desired time zone for the output timeseries. Input
 must be an Olson Name (see \code{OlsonNames()}). By default the the timeseries
@@ -52,6 +46,15 @@ This function returns a quality-checked timeseries from Water Data Online.
 For the parameters (and their units) that can be requested, see
 \link{parameters}. More information can be found in the Water Data Online
 SOS manual (URL in See Also below).
+}
+\examples{
+# Download annual rainfall for Cotter Hut
+get_yearly(
+  parameter_type = "Rainfall",
+  station_number = "570946",
+  start_date = 2016,
+  end_date = 2020
+)
 }
 \seealso{
 \itemize{

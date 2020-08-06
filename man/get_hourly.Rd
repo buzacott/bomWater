@@ -49,10 +49,12 @@ SOS manual (URL in See Also below).
 }
 \examples{
 # Hourly streamflow Cotter River at Gingera Gauge
-get_hourly(parameter_type = 'Water Course Discharge',
-           station_number = '410730',
-           start_date     = '2020-01-01',
-           end_date       = '2020-01-31')
+get_hourly(
+  parameter_type = "Water Course Discharge",
+  station_number = "410730",
+  start_date = "2020-01-01",
+  end_date = "2020-01-31"
+)
 }
 \seealso{
 \itemize{

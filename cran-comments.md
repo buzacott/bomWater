@@ -12,9 +12,8 @@ rhub::check(
   platform="windows-x86_64-devel",
   env_vars=c(R_COMPILE_AND_INSTALL_PACKAGES = "always")
 )
-rhub::check_cran()
 ```
-
+* rhub::check_cran() passed
 * devtools::check_win_devel() passed
 
 ## R CMD check results
