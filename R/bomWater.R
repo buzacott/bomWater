@@ -37,7 +37,25 @@ make_bom_request <- function(params) {
     "format" = "json"
   )
 
-  r <- httr::GET(bom_url, query = c(base_params, params))
+  r <- tryCatch({
+      r <- httr::GET(bom_url, query = c(base_params, params))
+      httr::stop_for_status(r, task = "request water data form BoM")
+      httr::warn_for_status(r, task = "request water data from BoM")
+    },
+    error = function(e) {
+      message(strwrap(
+        prefix = " ", initial = "",
+        "Request for water data failed. Check your request and make sure
+         http://www.bom.gov.au/waterdata/ is online"
+      ))
+      message("Error message:")
+      message(e$message)
+    },
+    warning = function(w) {
+      message("Request for water data raised a warning. Warning message:")
+      message(w$message)
+    }
+  )
   json <- jsonlite::fromJSON(httr::content(r, "text"))
 
   if (params$request %in% c(
@@ -183,14 +201,14 @@ get_timeseries_id <- function(parameter_type, station_number, ts_name) {
 #' @examples
 #' \dontrun{
 #' # Get the timeseries ID
-#' timeseriesID <- get_timeseries_id(
+#' timeseries_id <- get_timeseries_id(
 #'   parameter_type = "Water Course Discharge",
 #'   station_number = "410730",
 #'   ts_name = "DMQaQc.Merged.DailyMean.24HR"
 #' )
 #'
 #' get_timeseries_values(
-#'   timeseriesID$ts_id,
+#'   timeseries_id$ts_id,
 #'   start_date,
 #'   end_date,
 #'   return_fields = c(
