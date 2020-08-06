@@ -142,7 +142,6 @@ ggplot(corin, aes(Timestamp, Value)) +
   labs(x='Time', y='Storage Volume (ML)')
 ```
 
-
 ## Using getDaily()
 
 Retrieves timeseries at a daily timestep. For continuous data, the daily mean (default), max, and min can be returned by specifying the `var` argument. Daily totals are returned for discrete parameters (e.g. rainfall and evaporation). Timeseries aggregated between 9am to 9am for Rainfall and Water Course Discharge can be retrieved using the `aggregation` argument to match the standard BoM rainfall reporting.
@@ -177,7 +176,7 @@ getDaily(parameterType = 'Wind Speed',
 
 ## Using getMonthly()
 
-Retrieves timeseries at a monthly timestep. Monthly totals are returned for discrete parameters (e.g. rainfall and evaporation), while the mean rate is returned for continuos parameters.
+Retrieves timeseries at a monthly timestep. Monthly totals are returned for discrete parameters (e.g. rainfall and evaporation), while the mean rate is returned for continuous parameters.
 
 ### Result
 
@@ -228,7 +227,6 @@ ggplot(berthong, aes(Timestamp, Value)) +
   geom_col() +
   labs(x='Time', y='Rainfall (mm/year)')
 ```
-
 
 ## Using getAsStored()
 

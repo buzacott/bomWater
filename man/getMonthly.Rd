@@ -2,7 +2,7 @@
 % Please edit documentation in R/getSeries.R
 \name{getMonthly}
 \alias{getMonthly}
-\title{Get formatted timeseries data}
+\title{Get quality-checked timeseries data}
 \usage{
 getMonthly(parameterType, stationNumber, startDate, endDate, tz, returnFields)
 }
@@ -29,7 +29,7 @@ Zero row tibbles are returned if no data is available for the requested dates. T
 is generally the mean for most variables, except for rainfall and evaporation which is the sum over the chosen period.
 }
 \description{
-This function returns a formatted timeseries from Water Data Online.
+This function returns a quality-checked timeseries from Water Data Online.
 }
 \details{
 For the parameters (and their units) that can be requested, see \link{parameters}. More information can be

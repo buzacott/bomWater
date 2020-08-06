@@ -3,7 +3,7 @@ Type: Package
 Title: Download Bureau of Meteorology Water Data
 Version: 0.3.2
 Author: Alexander Buzacott
-Maintainer: Alexander Buzacott <alexander.buzacott@sydney.edu.au>
+Maintainer: Alexander Buzacott <abuz5257@uni.sydney.edu.au>
 Description: An R interface to the Australian Bureau of Meteorology Water Data Online web service.
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -17,8 +17,9 @@ Imports:
     jsonlite (>= 1.6.1),
     lubridate (>= 1.7.4),
     stringr (>= 1.4.0)
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    ggplot2
 VignetteBuilder: knitr
