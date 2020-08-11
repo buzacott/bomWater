@@ -56,11 +56,11 @@ library(bomWater)
 
 # Daily streamflow from Cotter River at Gingera (in m3/s)
 cotter_river = get_daily(parameter_type = 'Water Course Discharge',
-                        station_number = '410730',
-                        start_date     = '2020-01-01',
-                        end_date       = '2020-01-31')
+                         station_number = '410730',
+                         start_date     = '2020-01-01',
+                         end_date       = '2020-01-31')
 
-cotterRiver
+cotter_river
 # A tibble: 31 x 3
    Timestamp           Value `Quality Code`
    <dttm>              <dbl>          <int>
@@ -81,7 +81,7 @@ cotter_hut = get_monthly(parameter_type = 'Rainfall',
                          station_number = '570946',
                          start_date     = '2019-01-01',
                          end_date       = '2019-12-31')
-cotterHut
+cotter_hut
 # A tibble: 12 x 3
    Timestamp           Value `Quality Code`
    <dttm>              <dbl>          <int>

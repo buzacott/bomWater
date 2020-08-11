@@ -4,3 +4,4 @@
 ^ReadMe\.md$
 ^man-roxygen$
 cran-comments.md
+^CRAN-RELEASE$
