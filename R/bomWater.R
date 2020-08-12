@@ -10,24 +10,6 @@
 #' \code{get_timeseries} requests, a tibble with zero rows is returned
 #' if there is no data available for that query.
 #' @author Alexander Buzacott
-#' @examples
-#' # Getting the stations for Water Course Discharge
-#' \dontrun{
-#' params <- list(
-#'   "request" = "getStationList",
-#'   "parameter_type_name" = "Water Course Discharge",
-#'   "returnfields" = paste(c(
-#'     "station_name",
-#'     "station_no",
-#'     "station_id",
-#'     "station_latitude",
-#'     "station_longitude"
-#'   ),
-#'   collapse = ","
-#'   )
-#' )
-#' make_bom_request(params)
-#' }
 make_bom_request <- function(params) {
   bom_url <- "http://www.bom.gov.au/waterdata/services"
 
@@ -164,14 +146,6 @@ get_station_list <- function(parameter_type, station_number, return_fields) {
 #' Returns a tibble with columns station_name, station_no, station_id, ts_id,
 #' ts_name, parametertype_id, parametertype_name.
 #' @author Alexander Buzacott
-#' @examples
-#' \dontrun{
-#' get_timeseries_id(
-#'   parameter_type = "Water Course Discharge",
-#'   station_number = "410730",
-#'   ts_name = "DMQaQc.Merged.DailyMean.24HR"
-#' )
-#' }
 get_timeseries_id <- function(parameter_type, station_number, ts_name) {
   params <- list(
     "request" = "getTimeseriesList",
@@ -199,27 +173,7 @@ get_timeseries_id <- function(parameter_type, station_number, ts_name) {
 #' returned if no data is returned  from the query. The columns of the tibble
 #' are returned as character classes and have not been formatted to more
 #' appropriate correct classes (this happens in other functions).
-#' @examples
-#' \dontrun{
-#' # Get the timeseries ID
-#' timeseries_id <- get_timeseries_id(
-#'   parameter_type = "Water Course Discharge",
-#'   station_number = "410730",
-#'   ts_name = "DMQaQc.Merged.DailyMean.24HR"
-#' )
-#'
-#' get_timeseries_values(
-#'   timeseries_id$ts_id,
-#'   start_date,
-#'   end_date,
-#'   return_fields = c(
-#'     "Timestamp",
-#'     "Value",
-#'     "Quality Code",
-#'     "Interpolation Type"
-#'   )
-#' )
-#' }
+#' @author Alexander Buzacott
 get_timeseries_values <- function(ts_id, start_date, end_date, return_fields) {
   params <- list(
     "request" = "getTimeseriesValues",
