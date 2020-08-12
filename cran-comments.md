@@ -1,3 +1,19 @@
+# Resubmission
+
+* removed examples from unexported functions
+* exported `get_timeseries` and added an example
+* tweaked the title to 'Download Australian Bureau of Meteorology Water Data'
+* followed devtools::release() instructions again*
+
+# Review
+
+You have examples for unexported functions.
+Please either omit these examples or export these functions.
+
+Please fix and resubmit.
+
+# Original submission
+
 ## Test environments
 
 * local macOS install, R 4.0.2
