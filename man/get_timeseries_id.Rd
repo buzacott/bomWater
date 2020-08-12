@@ -22,15 +22,6 @@ ts_name, parametertype_id, parametertype_name.
 `get_timeseries_id` retrieves the timeseries ID that can be used to obtain
 values for a parameter type, station and timeseries combination.
 }
-\examples{
-\dontrun{
-get_timeseries_id(
-  parameter_type = "Water Course Discharge",
-  station_number = "410730",
-  ts_name = "DMQaQc.Merged.DailyMean.24HR"
-)
-}
-}
 \author{
 Alexander Buzacott
 }

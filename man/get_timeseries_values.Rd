@@ -26,25 +26,6 @@ appropriate correct classes (this happens in other functions).
 `get_timeseries_values` returns the timeseries values between a start and end
 date for given timeseries ID.
 }
-\examples{
-\dontrun{
-# Get the timeseries ID
-timeseries_id <- get_timeseries_id(
-  parameter_type = "Water Course Discharge",
-  station_number = "410730",
-  ts_name = "DMQaQc.Merged.DailyMean.24HR"
-)
-
-get_timeseries_values(
-  timeseries_id$ts_id,
-  start_date,
-  end_date,
-  return_fields = c(
-    "Timestamp",
-    "Value",
-    "Quality Code",
-    "Interpolation Type"
-  )
-)
-}
+\author{
+Alexander Buzacott
 }

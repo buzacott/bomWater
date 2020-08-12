@@ -15,7 +15,7 @@ get_monthly(
 }
 \arguments{
 \item{parameter_type}{The water data parameter type (e.g. Water Course
-Discharge). See below for a list of available parameters}
+Discharge). See \code{\link{parameters()}} for a full list.}
 
 \item{station_number}{The AWRC station number.}
 
@@ -30,7 +30,7 @@ is returned in an offset timezone (e.g. \code{Etc/GMT-10} for NSW) as the
 timeseries do not observe DST.}
 
 \item{return_fields}{Optional: columns to be returned from Water Data Online.
-By default Timestamp Value and Quality Code are returned.}
+By default Timestamp, Value and Quality Code are returned.}
 }
 \value{
 A tibble with the requested return fields, which by default are
@@ -40,7 +40,8 @@ generally the mean for most variables, except for rainfall and evaporation
 which is the sum over the chosen period.
 }
 \description{
-This function returns a quality-checked timeseries from Water Data Online.
+This function returns a quality-checked timeseries from
+Water Data Online.
 }
 \details{
 For the parameters (and their units) that can be requested, see

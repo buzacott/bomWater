@@ -1,8 +1,8 @@
-#' @title
-#' Get quality-checked timeseries data
+#' @title Get quality-checked timeseries data
 #'
 #' @description
-#' This function returns a quality-checked timeseries from Water Data Online.
+#' This function returns a quality-checked timeseries from
+#' Water Data Online.
 #'
 #' @details
 #' For the parameters (and their units) that can be requested, see
@@ -10,7 +10,7 @@
 #' SOS manual (URL in See Also below).
 #'
 #' @param parameter_type The water data parameter type (e.g. Water Course
-#' Discharge). See below for a list of available parameters
+#' Discharge). See \code{\link{parameters()}} for a full list.
 #' @param station_number The AWRC station number.
 #' @param start_date Start date formatted as a string or date class
 #' (YYYY-MM-DD).
@@ -20,7 +20,7 @@
 #' is returned in an offset timezone (e.g. `Etc/GMT-10` for NSW) as the
 #' timeseries do not observe DST.
 #' @param return_fields Optional: columns to be returned from Water Data Online.
-#' By default Timestamp Value and Quality Code are returned.
+#' By default Timestamp, Value and Quality Code are returned.
 #' @md
 #'
 #' @return A tibble with the requested return fields, which by default are

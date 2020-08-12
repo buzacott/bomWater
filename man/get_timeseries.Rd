@@ -2,7 +2,7 @@
 % Please edit documentation in R/getSeries.R
 \name{get_timeseries}
 \alias{get_timeseries}
-\title{Get quality-checked timeseries data}
+\title{Get time series}
 \usage{
 get_timeseries(
   parameter_type,
@@ -16,7 +16,7 @@ get_timeseries(
 }
 \arguments{
 \item{parameter_type}{The water data parameter type (e.g. Water Course
-Discharge). See below for a list of available parameters}
+Discharge). See \code{\link{parameters()}} for a full list.}
 
 \item{station_number}{The AWRC station number.}
 
@@ -26,39 +26,45 @@ Discharge). See below for a list of available parameters}
 \item{end_date}{End date formatted as a string or date class (YYYY-MM-DD).}
 
 \item{tz}{Optional: the desired time zone for the output timeseries. Input
-must be an Olson Name (see \code{OlsonNames()}). By default the the timeseries
-is returned in an offset timezone (e.g. \code{Etc/GMT-10} for NSW) as the
+must be an Olson Name (see `OlsonNames()`). By default the the timeseries
+is returned in an offset timezone (e.g. `Etc/GMT-10` for NSW) as the
 timeseries do not observe DST.}
 
 \item{return_fields}{Optional: columns to be returned from Water Data Online.
-By default Timestamp Value and Quality Code are returned.}
+By default Timestamp, Value and Quality Code are returned.}
 
 \item{ts_name}{The timeseries name (e.g. DMQaQc.Merged.DailyMean.24HR) that
 is desired.}
 }
 \value{
-A tibble with the requested return fields, which by default are
-\code{Timestamp}, \code{Value} and \verb{Quality Code}. Zero row tibbles are returned if
-no data is available for the requested dates. The aggregation of data is
-generally the mean for most variables, except for rainfall and evaporation
-which is the sum over the chosen period.
+A tibble with columns with the requested return_fields. A zero row tibble is
+returned if no data is returned  from the query. The columns of the tibble
+are returned as character classes and have not been formatted to more
+appropriate correct classes (this happens in other functions).
 }
 \description{
-This function returns a quality-checked timeseries from Water Data Online.
+`get_timeseries` Get timeseries data from Water Data online
 }
 \details{
-For the parameters (and their units) that can be requested, see
-\link{parameters}. More information can be found in the Water Data Online
-SOS manual (URL in See Also below).
-
-This function can be used if the others have missed a particular
-time series (e.g. the forecasting timeseries)
+This function can be used if you want to retrieve a specific
+timeseries that is not the default quality checked one.
+}
+\examples{
+# Accessible dam storage, as shown on the BoM Water Storage dashboard
+get_timeseries(
+  parameter_type = "Storage Volume",
+  "G8150011",
+  "2020-01-01",
+  "2020-01-31",
+  ts_name = "PR02AVQaQc.Merged.DailyMean.24HR",
+  tz = NULL,
+  return_fields = c("Timestamp", "Value", "Quality Code", "Interpolation Type")
+)
+# See the linked SOS2 manual in See Also to find more timeseries names
 }
 \seealso{
-\itemize{
-\item \url{http://www.bom.gov.au/waterdata/}
-\item \url{http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor\%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20Online\%20v1.0.1.pdf}
-}
+* \url{http://www.bom.gov.au/waterdata/}
+* \url{http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor\%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20Online\%20v1.0.1.pdf}
 }
 \author{
 Alexander Buzacott

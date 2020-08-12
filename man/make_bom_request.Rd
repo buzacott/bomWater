@@ -20,25 +20,6 @@ A parameter list is passed to make request and the JSON return is parsed
 depending on what is requested. This function can be used if you want to
 build your own JSON queries.
 }
-\examples{
-# Getting the stations for Water Course Discharge
-\dontrun{
-params <- list(
-  "request" = "getStationList",
-  "parameter_type_name" = "Water Course Discharge",
-  "returnfields" = paste(c(
-    "station_name",
-    "station_no",
-    "station_id",
-    "station_latitude",
-    "station_longitude"
-  ),
-  collapse = ","
-  )
-)
-make_bom_request(params)
-}
-}
 \author{
 Alexander Buzacott
 }
