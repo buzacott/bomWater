@@ -1,8 +1,44 @@
-#' @template timeseriesDocs
-#' @details This function can be used if the others have missed a particular
-#' time series (e.g. the forecasting timeseries)
+#' @title Get time series
+#' @description `get_timeseries` Get timeseries data from Water Data online
+#' @details This function can be used if you want to retrieve a specific
+#' timeseries that is not the default quality checked one.
+#' @param parameter_type The water data parameter type (e.g. Water Course
+#' Discharge). See \code{\link{parameters()}} for a full list.
+#' @param station_number The AWRC station number.
+#' @param start_date Start date formatted as a string or date class
+#' (YYYY-MM-DD).
+#' @param end_date End date formatted as a string or date class (YYYY-MM-DD).
+#' @param tz Optional: the desired time zone for the output timeseries. Input
+#' must be an Olson Name (see `OlsonNames()`). By default the the timeseries
+#' is returned in an offset timezone (e.g. `Etc/GMT-10` for NSW) as the
+#' timeseries do not observe DST.
+#' @param return_fields Optional: columns to be returned from Water Data Online.
+#' By default Timestamp, Value and Quality Code are returned.
 #' @param ts_name The timeseries name (e.g. DMQaQc.Merged.DailyMean.24HR) that
 #' is desired.
+#' @return
+#' A tibble with columns with the requested return_fields. A zero row tibble is
+#' returned if no data is returned  from the query. The columns of the tibble
+#' are returned as character classes and have not been formatted to more
+#' appropriate correct classes (this happens in other functions).
+#' @seealso
+#' * \url{http://www.bom.gov.au/waterdata/}
+#' * \url{http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor\%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20Online\%20v1.0.1.pdf}
+#' @examples
+#' # Accessible dam storage, as shown on the BoM Water Storage dashboard
+#' get_timeseries(
+#'   parameter_type = "Storage Volume",
+#'   "G8150011",
+#'   "2020-01-01",
+#'   "2020-01-31",
+#'   ts_name = "PR02AVQaQc.Merged.DailyMean.24HR",
+#'   tz = NULL,
+#'   return_fields = c("Timestamp", "Value", "Quality Code", "Interpolation Type")
+#' )
+#' # See the linked SOS2 manual in See Also to find more timeseries names
+#' @author Alexander Buzacott
+#' @export
+
 get_timeseries <- function(parameter_type,
                            station_number,
                            start_date,
@@ -12,7 +48,7 @@ get_timeseries <- function(parameter_type,
                            ts_name) {
 
   # Check date input is valid
-  if (anyNA(lubridate::as_date(c(start_date, end_date), "%Y-%m-%d", tz = tz))) {
+  if (anyNA(lubridate::as_date(c(start_date, end_date), format = "%Y-%m-%d"))) {
     stop("Dates must be formatted as %Y-%m-%d (e.g. 2000-01-01)")
   }
 
@@ -31,6 +67,11 @@ get_timeseries <- function(parameter_type,
   # Only accept one station at a time for now
   if (length(station_number) > 1) {
     stop("Only a single station can be requested at a time")
+  }
+
+  # If return_fields are missing return Timestamp, Value and Quality Code
+  if (missing(return_fields)) {
+    return_fields <- c("Timestamp", "Value", "Quality Code")
   }
 
   station_list <- get_station_list(parameter_type, station_number)
@@ -59,14 +100,17 @@ get_timeseries <- function(parameter_type,
       # For some reason a negative offset is ahead of UTC
       tz <- paste0("Etc/GMT-", tz_offset)
     }
-    # nolint start
     timeseries_values$Timestamp <-
       lubridate::as_datetime(timeseries_values$Timestamp)
     timeseries_values$Value <- as.numeric(timeseries_values$Value)
     timeseries_values$`Quality Code` <-
       as.integer(timeseries_values$`Quality Code`)
     attributes(timeseries_values$Timestamp)$tzone <- tz
-    # nolint end
+    # Check for interpolation type
+    if ("Interpolation Type" %in% colnames(timeseries_values)) {
+      timeseries_values$`Interpolation Type` <-
+        as.integer(timeseries_values$`Interpolation Type`)
+    }
   }
 
   return(timeseries_values)
@@ -376,6 +420,7 @@ get_yearly <- function(parameter_type,
 }
 
 #' @title Available water parameters
+#' @aliases parameters()
 #' @description
 #' `parameters` returns a vector of parameters that can be retrieved from
 #' Water Data Online.
@@ -405,6 +450,7 @@ get_yearly <- function(parameter_type,
 #' @seealso
 #' * \url{http://www.bom.gov.au/waterdata/}
 #' * \url{http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor\%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20Online\%20v1.0.1.pdf}
+#' @author Alexander Buzacott
 #' @examples
 #' parameters()
 #' parameters("continuous")
