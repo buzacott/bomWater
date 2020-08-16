@@ -131,7 +131,13 @@ get_station_list <- function(parameter_type, station_number, return_fields) {
 
   get_bom_request <- make_bom_request(params)
 
-  return(get_bom_request)
+  # Convert types
+  station_list <- dplyr::mutate_all(get_bom_request,
+    utils::type.convert,
+    as.is = TRUE
+  )
+
+  return(station_list)
 }
 
 #' @title Retrieve the timeseries ID

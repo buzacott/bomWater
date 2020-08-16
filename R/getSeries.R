@@ -94,22 +94,28 @@ get_timeseries <- function(parameter_type,
 
   # Only process data if it exists
   if (nrow(timeseries_values) > 0) {
-    # Get the tzone offset
-    if (is.null(tz)) {
-      tz_offset <- stringr::str_sub(timeseries_values$Timestamp[1], -5, -4)
-      # For some reason a negative offset is ahead of UTC
-      tz <- paste0("Etc/GMT-", tz_offset)
-    }
-    timeseries_values$Timestamp <-
-      lubridate::as_datetime(timeseries_values$Timestamp)
-    timeseries_values$Value <- as.numeric(timeseries_values$Value)
-    timeseries_values$`Quality Code` <-
-      as.integer(timeseries_values$`Quality Code`)
-    attributes(timeseries_values$Timestamp)$tzone <- tz
-    # Check for interpolation type
-    if ("Interpolation Type" %in% colnames(timeseries_values)) {
-      timeseries_values$`Interpolation Type` <-
-        as.integer(timeseries_values$`Interpolation Type`)
+    if ("Timestamp" %in% colnames(timeseries_values)) {
+      # Get the tzone offset
+      if (is.null(tz)) {
+        tz_offset <- stringr::str_sub(timeseries_values$Timestamp[1], -5, -4)
+        # For some reason a negative offset is ahead of UTC
+        tz <- paste0("Etc/GMT-", tz_offset)
+      }
+      # nolint start
+      timeseries_values$Timestamp <-
+        lubridate::as_datetime(timeseries_values$Timestamp)
+      attributes(timeseries_values$Timestamp)$tzone <- tz
+      timeseries_values <- dplyr::mutate_at(timeseries_values,
+        dplyr::vars(-"Timestamp"),
+        utils::type.convert,
+        as.is = TRUE
+      )
+      # nolint end
+    } else {
+      timeseries_values <- dplyr::mutate_all(timeseries_values,
+        utils::type.convert,
+        as.is = TRUE
+      )
     }
   }
 
