@@ -1,7 +1,28 @@
 #' @title Get time series
-#' @description `get_timeseries` Get timeseries data from Water Data online
+#' @md
+#' @description Get timeseries data from Water Data online
 #' @details This function can be used if you want to retrieve a specific
 #' timeseries that is not the default quality checked one.
+#'
+#' Common valid return fields are:
+#'
+#' * Timestamp
+#' * Value
+#' * Quality Code
+#' * Interpolation Type
+#'
+#' Other valid return fields (depending on the parameter requested) may be:
+#'
+#' * Absolute Value
+#' * AV Interpolation
+#' * AV Quality Code
+#' * Runoff Value
+#' * RV Interpolation
+#' * RV Quality Code
+#' * Aggregation
+#' * Accuracy
+#'
+#' If the request is not valid it will fail.
 #' @param parameter_type The water data parameter type (e.g. Water Course
 #' Discharge). See \code{\link{parameters()}} for a full list.
 #' @param station_number The AWRC station number.
@@ -23,7 +44,8 @@
 #' appropriate correct classes (this happens in other functions).
 #' @seealso
 #' * \url{http://www.bom.gov.au/waterdata/}
-#' * \url{http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor\%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20Online\%20v1.0.1.pdf}
+#' * [BoM Guide to Sensor Observation Services (SOS2) for Water Data Online](http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor\%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20Online\%20v1.0.1.pdf)
+#'
 #' @examples
 #' # Accessible dam storage, as shown on the BoM Water Storage dashboard
 #' get_timeseries(
@@ -235,7 +257,6 @@ get_hourly <- function(parameter_type,
 #'   var = "mean",
 #'   aggregation = "09HR"
 #' )
-#'
 #' # Download the daily max over the standard day
 #' get_daily(
 #'   parameter_type = "Water Course Discharge",
@@ -455,7 +476,7 @@ get_yearly <- function(parameter_type,
 #' @md
 #' @seealso
 #' * \url{http://www.bom.gov.au/waterdata/}
-#' * \url{http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor\%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20Online\%20v1.0.1.pdf}
+#' * [BoM Guide to Sensor Observation Services (SOS2) for Water Data Online](http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor\%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20Online\%20v1.0.1.pdf)
 #' @author Alexander Buzacott
 #' @examples
 #' parameters()

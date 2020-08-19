@@ -26,8 +26,8 @@ Discharge). See \code{\link{parameters()}} for a full list.}
 \item{end_date}{End date formatted as a string or date class (YYYY-MM-DD).}
 
 \item{tz}{Optional: the desired time zone for the output timeseries. Input
-must be an Olson Name (see `OlsonNames()`). By default the the timeseries
-is returned in an offset timezone (e.g. `Etc/GMT-10` for NSW) as the
+must be an Olson Name (see \code{OlsonNames()}). By default the the timeseries
+is returned in an offset timezone (e.g. \code{Etc/GMT-10} for NSW) as the
 timeseries do not observe DST.}
 
 \item{return_fields}{Optional: columns to be returned from Water Data Online.
@@ -43,11 +43,33 @@ are returned as character classes and have not been formatted to more
 appropriate correct classes (this happens in other functions).
 }
 \description{
-`get_timeseries` Get timeseries data from Water Data online
+Get timeseries data from Water Data online
 }
 \details{
 This function can be used if you want to retrieve a specific
 timeseries that is not the default quality checked one.
+
+Common valid return fields are:
+\itemize{
+\item Timestamp
+\item Value
+\item Quality Code
+\item Interpolation Type
+}
+
+Other valid return fields (depending on the parameter requested) may be:
+\itemize{
+\item Absolute Value
+\item AV Interpolation
+\item AV Quality Code
+\item Runoff Value
+\item RV Interpolation
+\item RV Quality Code
+\item Aggregation
+\item Accuracy
+}
+
+If the request is not valid it will fail.
 }
 \examples{
 # Accessible dam storage, as shown on the BoM Water Storage dashboard
@@ -63,8 +85,10 @@ get_timeseries(
 # See the linked SOS2 manual in See Also to find more timeseries names
 }
 \seealso{
-* \url{http://www.bom.gov.au/waterdata/}
-* \url{http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor\%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20Online\%20v1.0.1.pdf}
+\itemize{
+\item \url{http://www.bom.gov.au/waterdata/}
+\item \href{http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor\%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20Online\%20v1.0.1.pdf}{BoM Guide to Sensor Observation Services (SOS2) for Water Data Online}
+}
 }
 \author{
 Alexander Buzacott

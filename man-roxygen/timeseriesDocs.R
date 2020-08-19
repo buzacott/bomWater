@@ -1,13 +1,8 @@
 #' @title Get quality-checked timeseries data
-#'
+#' @md
 #' @description
 #' This function returns a quality-checked timeseries from
 #' Water Data Online.
-#'
-#' @details
-#' For the parameters (and their units) that can be requested, see
-#' \link{parameters}. More information can be found in the Water Data Online
-#' SOS manual (URL in See Also below).
 #'
 #' @param parameter_type The water data parameter type (e.g. Water Course
 #' Discharge). See \code{\link{parameters()}} for a full list.
@@ -21,7 +16,31 @@
 #' timeseries do not observe DST.
 #' @param return_fields Optional: columns to be returned from Water Data Online.
 #' By default Timestamp, Value and Quality Code are returned.
-#' @md
+#'
+#' #' @details
+#' For the parameters (and their units) that can be requested, see
+#' \link{parameters}. More information can be found in the Water Data Online
+#' SOS manual (URL in See Also below).
+#'
+#' Common valid return fields are:
+#'
+#' * Timestamp
+#' * Value
+#' * Quality Code
+#' * Interpolation Type
+#'
+#' Other valid return fields (depending on the parameter requested) may be:
+#'
+#' * Absolute Value
+#' * AV Interpolation
+#' * AV Quality Code
+#' * Runoff Value
+#' * RV Interpolation
+#' * RV Quality Code
+#' * Aggregation
+#' * Accuracy
+#'
+#' If the request is not valid it will fail.
 #'
 #' @return A tibble with the requested return fields, which by default are
 #' `Timestamp`, `Value` and `Quality Code`. Zero row tibbles are returned if
@@ -31,7 +50,7 @@
 #'
 #' @seealso
 #' * \url{http://www.bom.gov.au/waterdata/}
-#' * \url{http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor\%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20Online\%20v1.0.1.pdf}
+#' * [BoM Guide to Sensor Observation Services (SOS2) for Water Data Online](http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor\%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20Online\%20v1.0.1.pdf)
 #'
 #' @author Alexander Buzacott
 #'

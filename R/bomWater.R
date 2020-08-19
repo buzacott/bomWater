@@ -125,31 +125,30 @@ make_bom_request <- function(params) {
 #' # Rainfall stations
 #' get_station_list(parameter_type = "Rainfall")
 #' # Vector of return_fields
-#' return_fields = c(
-#'   'station_name',
-#'   'station_longname',
-#'   'station_no',
-#'   'station_id',
-#'   'station_latitude',
-#'   'station_longitude',
-#'   'station_carteasting',
-#'   'station_cartnorthing',
-#'   'stationparameter_name',
-#'   'station_georefsystem',
-#'   'catchment_no',
-#'   'catchment_id',
-#'   'catchment_name',
-#'   'site_no',
-#'   'site_id',
-#'   'site_name',
-#'   'parametertype_id',
-#'   'parametertype_name',
-#'   'object_type',
-#'   'custom_attributes'
-#'   )
+#' return_fields <- c(
+#'   "station_name",
+#'   "station_longname",
+#'   "station_no",
+#'   "station_id",
+#'   "station_latitude",
+#'   "station_longitude",
+#'   "station_carteasting",
+#'   "station_cartnorthing",
+#'   "stationparameter_name",
+#'   "station_georefsystem",
+#'   "catchment_no",
+#'   "catchment_id",
+#'   "catchment_name",
+#'   "site_no",
+#'   "site_id",
+#'   "site_name",
+#'   "parametertype_id",
+#'   "parametertype_name",
+#'   "object_type",
+#'   "custom_attributes"
+#' )
 #' # Get all attributes for one station
-#' get_station_list('Water Course Discharge', '410730', return_fields)
-#'
+#' get_station_list("Water Course Discharge", "410730", return_fields)
 #' @export
 get_station_list <- function(parameter_type, station_number, return_fields) {
   params <- list("request" = "getStationList")
@@ -178,7 +177,7 @@ get_station_list <- function(parameter_type, station_number, return_fields) {
     collapse = ","
     )
   } else {
-    params[["returnfields"]] <- paste(return_fields, collapse = ',')
+    params[["returnfields"]] <- paste(return_fields, collapse = ",")
   }
 
   get_bom_request <- make_bom_request(params)
