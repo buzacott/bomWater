@@ -37,10 +37,12 @@ The SOS2 manual can be consulted for the units of the different timeseries, as w
 
 ### Installation
 
-You can install `bomWater` directly from this repo using `devtools`:
-
 ```r
-devtools::install_github('https://github.com/buzacott/bomWater')
+# Install the release version from CRAN
+install.packages("bomWater")
+
+# Install the development version from GitHub
+devtools::install_github('buzacott/bomWater')
 ```
 
 ### Copyright
@@ -100,18 +102,18 @@ cotter_hut
 
 # Get a list of groundwater bore data available from water data online
 get_station_list(parameter_type = 'Ground Water Level')
-# A tibble: 4,433 x 5
+# A tibble: 4,439 x 5
    station_name station_no station_id station_latitude station_longitude
-   <chr>        <chr>      <chr>      <chr>            <chr>            
- 1 01/DD01 D    60930131   387998     -33.21743524     117.80645139     
- 2 01/DD01 OB   60930132   388003     -33.217408183    117.806451142    
- 3 01/DD04 S    60930135   388008     -33.217376694    117.805742621    
- 4 02/DD25 OB   60930141   388013     -33.218110097    117.803914363    
- 5 02/DD26 OB   60930142   388018     -33.218521858    117.80440102     
- 6 02/DD27 OB   60930143   388023     -33.218898026    117.80481224     
- 7 02/DD28 OB   60930144   388028     -33.219219939    117.805244428    
- 8 02/DD29 OB   60930145   388033     -33.219443056    117.805611327    
- 9 02/DD30 OB   60930146   388038     -33.219785507    117.80565739     
-10 02/DD31 OB   60930147   388043     -33.220099232    117.805960737    
-# … with 4,423 more rows
+   <chr>        <chr>           <int>            <dbl>             <dbl>
+ 1 01/DD01 D    60930131       387998            -33.2              118.
+ 2 01/DD01 OB   60930132       388003            -33.2              118.
+ 3 01/DD04 S    60930135       388008            -33.2              118.
+ 4 02/DD25 OB   60930141       388013            -33.2              118.
+ 5 02/DD26 OB   60930142       388018            -33.2              118.
+ 6 02/DD27 OB   60930143       388023            -33.2              118.
+ 7 02/DD28 OB   60930144       388028            -33.2              118.
+ 8 02/DD29 OB   60930145       388033            -33.2              118.
+ 9 02/DD30 OB   60930146       388038            -33.2              118.
+10 02/DD31 OB   60930147       388043            -33.2              118.
+# … with 4,429 more rows
 ```
