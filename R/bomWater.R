@@ -71,7 +71,7 @@ make_bom_request <- function(params) {
 }
 
 #' @title Retrieve water observation stations
-#'
+#' @md
 #' @description
 #' `get_station_list` queries Water Data Online and returns station details.
 #' Queries can be input with the desired `parameter_type` to find all the
@@ -91,6 +91,30 @@ make_bom_request <- function(params) {
 #' With the default return fields, a tibble with columns station_name,
 #' station_no, station_id, station_latitude, station_longitude.
 #'
+#' @details
+#' Possible return fields for `get_station_list()` are:
+#'
+#' * station_name
+#' * station_longname
+#' * station_no
+#' * station_id
+#' * station_latitude
+#' * station_longitude
+#' * station_carteasting
+#' * station_cartnorthing
+#' * stationparameter_name
+#' * station_georefsystem
+#' * catchment_no
+#' * catchment_id
+#' * catchment_name
+#' * site_no
+#' * site_id
+#' * site_name
+#' * parametertype_id
+#' * parametertype_name
+#' * object_type
+#' * custom_attributes
+#'
 #' @author Alexander Buzacott
 #'
 #' @examples
@@ -100,6 +124,32 @@ make_bom_request <- function(params) {
 #' get_station_list(station_number = "410730")
 #' # Rainfall stations
 #' get_station_list(parameter_type = "Rainfall")
+#' # Vector of return_fields
+#' return_fields = c(
+#'   'station_name',
+#'   'station_longname',
+#'   'station_no',
+#'   'station_id',
+#'   'station_latitude',
+#'   'station_longitude',
+#'   'station_carteasting',
+#'   'station_cartnorthing',
+#'   'stationparameter_name',
+#'   'station_georefsystem',
+#'   'catchment_no',
+#'   'catchment_id',
+#'   'catchment_name',
+#'   'site_no',
+#'   'site_id',
+#'   'site_name',
+#'   'parametertype_id',
+#'   'parametertype_name',
+#'   'object_type',
+#'   'custom_attributes'
+#'   )
+#' # Get all attributes for one station
+#' get_station_list('Water Course Discharge', '410730', return_fields)
+#'
 #' @export
 get_station_list <- function(parameter_type, station_number, return_fields) {
   params <- list("request" = "getStationList")
@@ -127,6 +177,8 @@ get_station_list <- function(parameter_type, station_number, return_fields) {
     ),
     collapse = ","
     )
+  } else {
+    params[["returnfields"]] <- paste(return_fields, collapse = ',')
   }
 
   get_bom_request <- make_bom_request(params)

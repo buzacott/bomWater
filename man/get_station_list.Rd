@@ -22,12 +22,37 @@ With the default return fields, a tibble with columns station_name,
 station_no, station_id, station_latitude, station_longitude.
 }
 \description{
-`get_station_list` queries Water Data Online and returns station details.
-Queries can be input with the desired `parameter_type` to find all the
+\code{get_station_list} queries Water Data Online and returns station details.
+Queries can be input with the desired \code{parameter_type} to find all the
 stations on record. If you already have a vector of station numbers, you can
-pass the vector to `station_number` and return the details of those
+pass the vector to \code{station_number} and return the details of those
 stations.
-`return_fields` can be customised to return various data about the stations.
+\code{return_fields} can be customised to return various data about the stations.
+}
+\details{
+Possible return fields for \code{get_station_list()} are:
+\itemize{
+\item station_name
+\item station_longname
+\item station_no
+\item station_id
+\item station_latitude
+\item station_longitude
+\item station_carteasting
+\item station_cartnorthing
+\item stationparameter_name
+\item station_georefsystem
+\item catchment_no
+\item catchment_id
+\item catchment_name
+\item site_no
+\item site_id
+\item site_name
+\item parametertype_id
+\item parametertype_name
+\item object_type
+\item custom_attributes
+}
 }
 \examples{
 # Get all Water Course Discharge Stations
@@ -36,6 +61,32 @@ get_station_list()
 get_station_list(station_number = "410730")
 # Rainfall stations
 get_station_list(parameter_type = "Rainfall")
+# Vector of return_fields
+return_fields = c(
+  'station_name',
+  'station_longname',
+  'station_no',
+  'station_id',
+  'station_latitude',
+  'station_longitude',
+  'station_carteasting',
+  'station_cartnorthing',
+  'stationparameter_name',
+  'station_georefsystem',
+  'catchment_no',
+  'catchment_id',
+  'catchment_name',
+  'site_no',
+  'site_id',
+  'site_name',
+  'parametertype_id',
+  'parametertype_name',
+  'object_type',
+  'custom_attributes'
+  )
+# Get all attributes for one station
+get_station_list('Water Course Discharge', '410730', return_fields)
+
 }
 \author{
 Alexander Buzacott
