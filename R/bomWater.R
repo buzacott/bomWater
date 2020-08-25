@@ -244,3 +244,78 @@ get_timeseries_values <- function(ts_id, start_date, end_date, return_fields) {
 
   return(get_bom_request)
 }
+
+#' @title Retrieve available parameters for stations
+#' @md
+#' @description
+#' `get_parameter_list` returns the parameters that can be retrieved at one or
+#' more stations.
+#' @param station_number A single or multiple vector of AWRC station
+#' numbers.
+#' @param return_fields (Optional) Station parameter details to be returned.
+#' By default the return fields are: station_no, station_id, station_name,
+#' parametertype_id, parametertype_name, parametertype_unitname
+#' parametertype_shortunitname.
+#' @details
+#' The default return fields have been selected to generally return the most
+#' useful fields while reducing duplication of metadata.
+#' The full list of return fields:
+#' * station_no',
+#' * station_id
+#' * station_name
+#' * stationparameter_id
+#' * stationparameter_no
+#' * stationparameter_name
+#' * stationparameter_longname
+#' * site_id
+#' * site_no
+#' * site_name
+#' * parametertype_id
+#' * parametertype_name
+#' * parametertype_longname
+#' * parametertype_unitname
+#' * parametertype_shortunitname
+#' @return
+#' A tibble with columns for each of the return fields.
+#' @examples
+#' # Return parameters for a single station
+#' get_parameter_list(station_number = "410730")
+#' # Return available parameters for multiple stations
+#' get_parameter_list(station_number = c("410730", "570946"))
+#' @export
+get_parameter_list <- function(station_number, return_fields) {
+  params <- list("request" = "getParameterList")
+
+  if (!missing(station_number)) {
+    # Support multiple stations
+    station_number <- paste(station_number, collapse = ",")
+    params[["station_no"]] <- station_number
+  } else {
+    stop("No station number provided")
+  }
+
+  # Set the default return fields
+  if (missing(return_fields)) {
+    params[["returnfields"]] <- paste(c(
+      "station_no",
+      "station_id",
+      "station_name",
+      "parametertype_id",
+      "parametertype_name",
+      "parametertype_unitname",
+      "parametertype_shortunitname"
+    ),
+    collapse = ","
+    )
+  }
+
+  get_bom_request <- make_bom_request(params)
+
+  # Convert types
+  parameter_list <- dplyr::mutate_all(get_bom_request,
+    utils::type.convert,
+    as.is = TRUE
+  )
+
+  return(parameter_list)
+}
