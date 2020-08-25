@@ -43,7 +43,6 @@ make_bom_request <- function(params) {
 
   if (params$request %in% c(
     "getParameterList",
-    "getParameterTypeList",
     "getSiteList",
     "getStationList",
     "getTimeseriesList"
