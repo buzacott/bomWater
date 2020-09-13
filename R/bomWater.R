@@ -117,11 +117,17 @@ make_bom_request <- function(params) {
 #'
 #' @examples
 #' # Get all Water Course Discharge Stations
+#' \dontrun{
 #' get_station_list()
+#' }
 #' # Just the details for Cotter River at Gingera
+#' \dontrun{
 #' get_station_list(station_number = "410730")
+#' }
 #' # Rainfall stations
+#' \dontrun{
 #' get_station_list(parameter_type = "Rainfall")
+#' }
 #' # Vector of return_fields
 #' return_fields <- c(
 #'   "station_name",
@@ -146,7 +152,9 @@ make_bom_request <- function(params) {
 #'   "custom_attributes"
 #' )
 #' # Get all attributes for one station
+#' \dontrun{
 #' get_station_list("Water Course Discharge", "410730", return_fields)
+#' }
 #' @export
 get_station_list <- function(parameter_type, station_number, return_fields) {
   params <- list("request" = "getStationList")
@@ -278,9 +286,13 @@ get_timeseries_values <- function(ts_id, start_date, end_date, return_fields) {
 #' A tibble with columns for each of the return fields.
 #' @examples
 #' # Return parameters for a single station
+#' \dontrun{
 #' get_parameter_list(station_number = "410730")
+#' }
 #' # Return available parameters for multiple stations
+#' \dontrun{
 #' get_parameter_list(station_number = c("410730", "570946"))
+#' }
 #' @export
 get_parameter_list <- function(station_number, return_fields) {
   params <- list("request" = "getParameterList")

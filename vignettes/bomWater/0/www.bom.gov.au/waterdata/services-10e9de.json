@@ -1,0 +1,16 @@
+[
+    [
+        "station_name",
+        "station_no",
+        "station_id",
+        "station_latitude",
+        "station_longitude"
+    ],
+    [
+        "Corin Dam Boat Ramp",
+        "570947",
+        "13648",
+        "-35.53805506",
+        "148.83777706"
+    ]
+]

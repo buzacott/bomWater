@@ -1,0 +1,20 @@
+[
+    [
+        "station_name",
+        "station_no",
+        "station_id",
+        "ts_id",
+        "ts_name",
+        "parametertype_id",
+        "parametertype_name"
+    ],
+    [
+        "BLOWERING DAM",
+        "410102",
+        "641448",
+        "196412010",
+        "DMQaQc.Merged.MonthlyTotal.CalMonth",
+        "11708",
+        "Evaporation"
+    ]
+]

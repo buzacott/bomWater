@@ -73,12 +73,14 @@ If the request is not valid it will fail.
 \examples{
 # Groundwater level as stored by the BoM
 # PLUMB RD @ NARRABRI'
+\dontrun{
 get_as_stored(
   parameter_type = "Ground Water Level",
   station_number = "GW971623.3.3",
   start_date = "2020-03-01",
   end_date = "2020-03-01"
 )
+}
 }
 \seealso{
 \itemize{

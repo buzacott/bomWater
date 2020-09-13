@@ -1,0 +1,16 @@
+[
+    [
+        "station_name",
+        "station_no",
+        "station_id",
+        "station_latitude",
+        "station_longitude"
+    ],
+    [
+        "Cotter R. at Gingera",
+        "410730",
+        "13360",
+        "-35.58805556",
+        "148.82191667"
+    ]
+]

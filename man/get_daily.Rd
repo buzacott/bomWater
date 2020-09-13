@@ -82,6 +82,7 @@ If the request is not valid it will fail.
 }
 \examples{
 # Download daily mean aggregated over the standard day
+\dontrun{
 get_daily(
   parameter_type = "Water Course Discharge",
   station_number = "410730",
@@ -90,7 +91,9 @@ get_daily(
   var = "mean",
   aggregation = "24HR"
 )
+}
 # Download daily mean aggregated between 9am to 9am
+\dontrun{
 get_daily(
   parameter_type = "Water Course Discharge",
   station_number = "410730",
@@ -99,7 +102,9 @@ get_daily(
   var = "mean",
   aggregation = "09HR"
 )
+}
 # Download the daily max over the standard day
+\dontrun{
 get_daily(
   parameter_type = "Water Course Discharge",
   station_number = "410730",
@@ -108,6 +113,7 @@ get_daily(
   var = "max",
   aggregation = "24HR"
 )
+}
 }
 \seealso{
 \itemize{

@@ -72,12 +72,14 @@ If the request is not valid it will fail.
 }
 \examples{
 # Download annual rainfall for Cotter Hut
+\dontrun{
 get_yearly(
   parameter_type = "Rainfall",
   station_number = "570946",
   start_date = 2016,
   end_date = 2020
 )
+}
 }
 \seealso{
 \itemize{

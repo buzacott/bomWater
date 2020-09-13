@@ -1,0 +1,16 @@
+[
+    [
+        "station_name",
+        "station_no",
+        "station_id",
+        "station_latitude",
+        "station_longitude"
+    ],
+    [
+        "MUTTAMA @ BERTHONG",
+        "41000207",
+        "587917",
+        "-34.5957",
+        "148.0178"
+    ]
+]

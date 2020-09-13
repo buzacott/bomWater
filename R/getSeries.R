@@ -48,6 +48,7 @@
 #'
 #' @examples
 #' # Accessible dam storage, as shown on the BoM Water Storage dashboard
+#' \dontrun{
 #' get_timeseries(
 #'   parameter_type = "Storage Volume",
 #'   "G8150011",
@@ -57,6 +58,7 @@
 #'   tz = NULL,
 #'   return_fields = c("Timestamp", "Value", "Quality Code")
 #' )
+#' }
 #' # See the linked SOS2 manual in See Also to find more timeseries names
 #' @author Alexander Buzacott
 #' @export
@@ -148,12 +150,14 @@ get_timeseries <- function(parameter_type,
 #' @examples
 #' # Groundwater level as stored by the BoM
 #' # PLUMB RD @ NARRABRI'
+#' \dontrun{
 #' get_as_stored(
 #'   parameter_type = "Ground Water Level",
 #'   station_number = "GW971623.3.3",
 #'   start_date = "2020-03-01",
 #'   end_date = "2020-03-01"
 #' )
+#' }
 #' @export
 get_as_stored <- function(parameter_type,
                           station_number,
@@ -189,12 +193,14 @@ get_as_stored <- function(parameter_type,
 #' @template timeseriesDocs
 #' @examples
 #' # Hourly streamflow Cotter River at Gingera Gauge
+#' \dontrun{
 #' get_hourly(
 #'   parameter_type = "Water Course Discharge",
 #'   station_number = "410730",
 #'   start_date = "2020-01-01",
 #'   end_date = "2020-01-31"
 #' )
+#' }
 #' @export
 get_hourly <- function(parameter_type,
                        station_number,
@@ -243,6 +249,7 @@ get_hourly <- function(parameter_type,
 #' is only available for mean discharge and total rainfall and evaporation.
 #' @examples
 #' # Download daily mean aggregated over the standard day
+#' \dontrun{
 #' get_daily(
 #'   parameter_type = "Water Course Discharge",
 #'   station_number = "410730",
@@ -251,7 +258,9 @@ get_hourly <- function(parameter_type,
 #'   var = "mean",
 #'   aggregation = "24HR"
 #' )
+#' }
 #' # Download daily mean aggregated between 9am to 9am
+#' \dontrun{
 #' get_daily(
 #'   parameter_type = "Water Course Discharge",
 #'   station_number = "410730",
@@ -260,7 +269,9 @@ get_hourly <- function(parameter_type,
 #'   var = "mean",
 #'   aggregation = "09HR"
 #' )
+#' }
 #' # Download the daily max over the standard day
+#' \dontrun{
 #' get_daily(
 #'   parameter_type = "Water Course Discharge",
 #'   station_number = "410730",
@@ -269,6 +280,7 @@ get_hourly <- function(parameter_type,
 #'   var = "max",
 #'   aggregation = "24HR"
 #' )
+#' }
 #' @export
 get_daily <- function(parameter_type,
                       station_number,
@@ -349,12 +361,14 @@ get_daily <- function(parameter_type,
 #' @template timeseriesDocs
 #' @examples
 #' # Monthly average dry air temperature at Corin Dam
+#' \dontrun{
 #' get_monthly(
 #'   parameter_type = "Dry Air Temperature",
 #'   station_number = "570947",
 #'   start_date = "2016-01-01",
 #'   end_date = "2016-06-01"
 #' )
+#' }
 #' @export
 get_monthly <- function(parameter_type,
                         station_number,
@@ -403,12 +417,14 @@ get_monthly <- function(parameter_type,
 #' @param end_date End date (formatted as YYYY-MM-DD) or just the year (YYYY)
 #' @examples
 #' # Download annual rainfall for Cotter Hut
+#' \dontrun{
 #' get_yearly(
 #'   parameter_type = "Rainfall",
 #'   station_number = "570946",
 #'   start_date = 2016,
 #'   end_date = 2020
 #' )
+#' }
 #' @export
 get_yearly <- function(parameter_type,
                        station_number,
@@ -487,9 +503,11 @@ get_yearly <- function(parameter_type,
 #' * [BoM Guide to Sensor Observation Services (SOS2) for Water Data Online](http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor\%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20Online\%20v1.0.1.pdf)
 #' @author Alexander Buzacott
 #' @examples
+#' \dontrun{
 #' parameters()
 #' parameters("continuous")
 #' parameters("discrete")
+#' }
 #' @export
 parameters <- function(pars) {
   continuous <- c(

@@ -1,0 +1,20 @@
+[
+    [
+        "station_name",
+        "station_no",
+        "station_id",
+        "ts_id",
+        "ts_name",
+        "parametertype_id",
+        "parametertype_name"
+    ],
+    [
+        "Cotter Hut",
+        "570946",
+        "13643",
+        "2935010",
+        "DMQaQc.Merged.MonthlyTotal.CalMonth",
+        "11731",
+        "Rainfall"
+    ]
+]

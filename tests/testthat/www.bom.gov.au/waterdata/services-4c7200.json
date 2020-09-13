@@ -1,0 +1,23 @@
+[
+    [
+        "station_name",
+        "station_no",
+        "station_id",
+        "station_latitude",
+        "station_longitude"
+    ],
+    [
+        "Cotter Hut",
+        "570946",
+        "13643",
+        "-35.64947222",
+        "148.83144444"
+    ],
+    [
+        "Cotter R. at Gingera",
+        "410730",
+        "13360",
+        "-35.58805556",
+        "148.82191667"
+    ]
+]

@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+library(httptest)
+start_vignette("bomWater")
 ```
 
 ## Introduction
@@ -250,7 +252,7 @@ ggplot(berthong, aes(Timestamp, Value)) +
 
 ## Using get_as_stored()
 
-Retrieves timeseries as stored by the BoM. Results could vary.
+Retrieves timeseries as stored by the BoM. Stored frequency could vary substantially between different parameters and locations.
 
 ### Result
 
@@ -272,3 +274,7 @@ berthong
 ## Copyright
 
 The license and copyright for the data can be viewed under the copyright tab at http://www.bom.gov.au/waterdata/. More information about the Bureau of Meteorology copyright can be found at http://www.bom.gov.au/other/copyright.shtml.
+
+```{r, include=FALSE}
+end_vignette()
+```

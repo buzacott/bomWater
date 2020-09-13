@@ -1,0 +1,20 @@
+[
+    [
+        "station_name",
+        "station_no",
+        "station_id",
+        "ts_id",
+        "ts_name",
+        "parametertype_id",
+        "parametertype_name"
+    ],
+    [
+        "Cotter R. at Gingera",
+        "410730",
+        "13360",
+        "1572010",
+        "DMQaQc.Merged.DailyMean.09HR",
+        "11762",
+        "Water Course Discharge"
+    ]
+]

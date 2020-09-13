@@ -1,0 +1,20 @@
+[
+    [
+        "station_name",
+        "station_no",
+        "station_id",
+        "ts_id",
+        "ts_name",
+        "parametertype_id",
+        "parametertype_name"
+    ],
+    [
+        "Corin Dam Boat Ramp",
+        "570947",
+        "13648",
+        "3016010",
+        "DMQaQc.Merged.DailyMean.24HR",
+        "11770",
+        "Wind Speed"
+    ]
+]

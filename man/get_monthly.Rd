@@ -72,12 +72,14 @@ If the request is not valid it will fail.
 }
 \examples{
 # Monthly average dry air temperature at Corin Dam
+\dontrun{
 get_monthly(
   parameter_type = "Dry Air Temperature",
   station_number = "570947",
   start_date = "2016-01-01",
   end_date = "2016-06-01"
 )
+}
 }
 \seealso{
 \itemize{

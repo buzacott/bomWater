@@ -73,6 +73,7 @@ If the request is not valid it will fail.
 }
 \examples{
 # Accessible dam storage, as shown on the BoM Water Storage dashboard
+\dontrun{
 get_timeseries(
   parameter_type = "Storage Volume",
   "G8150011",
@@ -80,8 +81,9 @@ get_timeseries(
   "2020-01-31",
   ts_name = "PR02AVQaQc.Merged.DailyMean.24HR",
   tz = NULL,
-  return_fields = c("Timestamp", "Value", "Quality Code", "Interpolation Type")
+  return_fields = c("Timestamp", "Value", "Quality Code")
 )
+}
 # See the linked SOS2 manual in See Also to find more timeseries names
 }
 \seealso{

@@ -1,0 +1,20 @@
+[
+    [
+        "station_name",
+        "station_no",
+        "station_id",
+        "ts_id",
+        "ts_name",
+        "parametertype_id",
+        "parametertype_name"
+    ],
+    [
+        "MUTTAMA @ BERTHONG",
+        "41000207",
+        "587917",
+        "148127010",
+        "DMQaQc.Merged.AsStored.1",
+        "11731",
+        "Rainfall"
+    ]
+]
