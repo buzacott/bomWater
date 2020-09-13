@@ -30,9 +30,20 @@ is returned in an offset timezone (e.g. \code{Etc/GMT-10} for NSW) as the
 timeseries do not observe DST.}
 
 \item{return_fields}{Optional: columns to be returned from Water Data Online.
-By default Timestamp, Value and Quality Code are returned.
-
-#' @details
+By default Timestamp, Value and Quality Code are returned.}
+}
+\value{
+A tibble with the requested return fields, which by default are
+\code{Timestamp}, \code{Value} and \verb{Quality Code}. Zero row tibbles are returned if
+no data is available for the requested dates. The aggregation of data is
+generally the mean for most variables, except for rainfall and evaporation
+which is the sum over the chosen period.
+}
+\description{
+This function returns a quality-checked timeseries from
+Water Data Online.
+}
+\details{
 For the parameters (and their units) that can be requested, see
 \link{parameters}. More information can be found in the Water Data Online
 SOS manual (URL in See Also below).
@@ -57,18 +68,7 @@ Other valid return fields (depending on the parameter requested) may be:
 \item Accuracy
 }
 
-If the request is not valid it will fail.}
-}
-\value{
-A tibble with the requested return fields, which by default are
-\code{Timestamp}, \code{Value} and \verb{Quality Code}. Zero row tibbles are returned if
-no data is available for the requested dates. The aggregation of data is
-generally the mean for most variables, except for rainfall and evaporation
-which is the sum over the chosen period.
-}
-\description{
-This function returns a quality-checked timeseries from
-Water Data Online.
+If the request is not valid it will fail.
 }
 \examples{
 # Groundwater level as stored by the BoM

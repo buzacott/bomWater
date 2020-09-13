@@ -55,7 +55,7 @@
 #'   "2020-01-31",
 #'   ts_name = "PR02AVQaQc.Merged.DailyMean.24HR",
 #'   tz = NULL,
-#'   return_fields = c("Timestamp", "Value", "Quality Code", "Interpolation Type")
+#'   return_fields = c("Timestamp", "Value", "Quality Code")
 #' )
 #' # See the linked SOS2 manual in See Also to find more timeseries names
 #' @author Alexander Buzacott
@@ -158,7 +158,8 @@ get_timeseries <- function(parameter_type,
 get_as_stored <- function(parameter_type,
                           station_number,
                           start_date,
-                          end_date, tz,
+                          end_date,
+                          tz,
                           return_fields) {
   parameter_type <-
     parameters()[tolower(parameter_type) == tolower(parameters())]
@@ -169,7 +170,7 @@ get_as_stored <- function(parameter_type,
   if (missing(tz)) tz <- NULL
 
   if (missing(return_fields)) {
-    return_fields <- "Timestamp,Value,Quality Code"
+    return_fields <- c("Timestamp", "Value", "Quality Code")
   }
 
   timeseries_values <- get_timeseries(
@@ -216,7 +217,9 @@ get_hourly <- function(parameter_type,
   }
 
   if (missing(tz)) tz <- NULL
-  if (missing(return_fields)) return_fields <- "Timestamp,Value,Quality Code"
+  if (missing(return_fields)) {
+    return_fields <- c("Timestamp", "Value", "Quality Code")
+  }
 
   timeseries_values <- get_timeseries(
     parameter_type,
@@ -326,8 +329,9 @@ get_daily <- function(parameter_type,
 
   if (missing(tz)) tz <- NULL
 
-  if (missing(return_fields)) return_fields <- "Timestamp,Value,Quality Code"
-
+  if (missing(return_fields)) {
+    return_fields <- c("Timestamp", "Value", "Quality Code")
+  }
 
   timeseries_values <- get_timeseries(
     parameter_type,
@@ -376,7 +380,9 @@ get_monthly <- function(parameter_type,
 
   if (missing(tz)) tz <- NULL
 
-  if (missing(return_fields)) return_fields <- "Timestamp,Value,Quality Code"
+  if (missing(return_fields)) {
+    return_fields <- c("Timestamp", "Value", "Quality Code")
+  }
 
   timeseries_values <- get_timeseries(
     parameter_type,
@@ -431,7 +437,9 @@ get_yearly <- function(parameter_type,
 
   if (missing(tz)) tz <- NULL
 
-  if (missing(return_fields)) return_fields <- "Timestamp,Value,Quality Code"
+  if (missing(return_fields)) {
+    return_fields <- c("Timestamp", "Value", "Quality Code")
+  }
 
   timeseries_values <- get_timeseries(
     parameter_type,

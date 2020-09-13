@@ -17,7 +17,7 @@
 #' @param return_fields Optional: columns to be returned from Water Data Online.
 #' By default Timestamp, Value and Quality Code are returned.
 #'
-#' #' @details
+#' @details
 #' For the parameters (and their units) that can be requested, see
 #' \link{parameters}. More information can be found in the Water Data Online
 #' SOS manual (URL in See Also below).

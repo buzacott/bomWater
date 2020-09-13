@@ -50,7 +50,6 @@ make_bom_request <- function(params) {
     if (json[1] == "No matches.") {
       stop("No parameter type and station number match found")
     }
-
     colnames(json) <- json[1, ]
     tbl <- dplyr::slice(tibble::as_tibble(json), -1)
   } else if (params$request == "getTimeseriesValues") {
@@ -182,7 +181,8 @@ get_station_list <- function(parameter_type, station_number, return_fields) {
   get_bom_request <- make_bom_request(params)
 
   # Convert types
-  station_list <- dplyr::mutate_all(get_bom_request,
+  station_list <- dplyr::mutate_all(
+    get_bom_request,
     utils::type.convert,
     as.is = TRUE
   )
@@ -311,7 +311,8 @@ get_parameter_list <- function(station_number, return_fields) {
   get_bom_request <- make_bom_request(params)
 
   # Convert types
-  parameter_list <- dplyr::mutate_all(get_bom_request,
+  parameter_list <- dplyr::mutate_all(
+    get_bom_request,
     utils::type.convert,
     as.is = TRUE
   )
