@@ -5,6 +5,7 @@ Updating as requested prior to 2019-09-17
 * local: macOS 10.5.6, R 4.0.2
 * local: Ubuntu 18.04, R 4.0.2
 * rhub::check_for_cran()
+* devtools::check_win_devel()
 
 ── R CMD check results ─────────────────────────────────────────────────────────────────────────────────────────────────────────────── bomWater 0.4.1 ────
 Duration: 18.2s
