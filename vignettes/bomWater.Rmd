@@ -20,7 +20,7 @@ start_vignette("bomWater")
 
 ## Introduction
 
-`bomWater` provides an interface to the Australian Bureau of Meteorology Water Data online (http://bom.gov.au/waterdata/) web service. As part of the Water Act 2007, the BoM is required to collect Australian water information and make it available to the public. This provides a single and convenient source of water data for all states and territories. Several hydrological and meteorological quality checked timeseries are available through Water Data online and `bomWater` provides several functions to access these timeseries.
+`bomWater` provides an interface to the Australian Bureau of Meteorology Water Data online (http://www.bom.gov.au/waterdata/) web service. As part of the Water Act 2007, the BoM is required to collect Australian water information and make it available to the public. This provides a single and convenient source of water data for all states and territories. Several hydrological and meteorological quality checked timeseries are available through Water Data online and `bomWater` provides several functions to access these timeseries.
 
 ## Using bomWater
 
