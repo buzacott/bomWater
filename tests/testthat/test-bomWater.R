@@ -1,6 +1,6 @@
 not_cran <- Sys.getenv('NOT_CRAN')
+internet <- curl::has_internet()
 
-# Capture tests
 test_that("I can make requests to BoM", {
   params <- list(
     "request" = "getStationList",
@@ -14,7 +14,7 @@ test_that("I can make requests to BoM", {
       "station_longitude"
     ), collapse = ",")
   )
-  if (not_cran) {
+  if (not_cran != FALSE & internet == TRUE) {
     r <- make_bom_request(params)
   } else {
     with_mock_api({
@@ -29,7 +29,7 @@ test_that("I can make requests to BoM", {
 
 
 test_that("I can get a station list", {
-  if (not_cran) {
+  if (not_cran != FALSE & internet == TRUE) {
     r <- get_station_list("Rainfall", "570946")
   } else {
     with_mock_api({
@@ -44,7 +44,7 @@ test_that("I can get a station list", {
   expect_equal(r$station_latitude, -35.64947222)
   expect_equal(r$station_longitude, 148.83144444)
 
-  if (not_cran) {
+  if (not_cran != FALSE) {
     r <- get_station_list("Rainfall", c("570946", "410730"))
   } else {
     with_mock_api({
@@ -59,7 +59,7 @@ test_that("I can get a station list", {
 
 
 test_that("I can get a timeseries ID", {
-  if (not_cran) {
+  if (not_cran != FALSE & internet == TRUE) {
     r <- get_timeseries_id(
       "Water Course Discharge",
       "410730",
@@ -84,7 +84,7 @@ test_that("I can get a timeseries ID", {
 
 test_that("I can get timeseries values", {
   # Berthong annual rainfall
-  if (not_cran) {
+  if (not_cran != FALSE & internet == TRUE) {
     r <- get_timeseries_values(148131010,
                                "2016-01-01",
                                "2016-12-31",
@@ -118,7 +118,7 @@ test_that("I can get timeseries values", {
 
 
 test_that("I get an error", {
-  if (not_cran) {
+  if (not_cran != FALSE & internet == TRUE) {
     expect_error(
       get_timeseries_id(
         "Water Course Discharge",
@@ -141,7 +141,7 @@ test_that("I get an error", {
 
 
 test_that("get timeseries puts it all together", {
-  if (not_cran) {
+  if (not_cran != FALSE & internet == TRUE) {
     r <- get_timeseries(
       "Water Course Discharge",
       "410730",

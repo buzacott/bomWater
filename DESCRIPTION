@@ -24,5 +24,6 @@ Suggests:
     httptest,
     knitr,
     rmarkdown,
-    testthat
+    testthat,
+    curl
 VignetteBuilder: knitr

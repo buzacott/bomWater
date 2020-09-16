@@ -39,11 +39,9 @@ The units of the parameters are as follows:
 }
 }
 \examples{
-\dontrun{
 parameters()
 parameters("continuous")
 parameters("discrete")
-}
 }
 \seealso{
 \itemize{

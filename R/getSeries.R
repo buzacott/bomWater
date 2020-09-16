@@ -257,8 +257,8 @@ get_hourly <- function(parameter_type,
 #'   end_date = "2020-01-31",
 #'   var = "mean",
 #'   aggregation = "24HR"
-#' )
-#' }
+#' )}
+#'
 #' # Download daily mean aggregated between 9am to 9am
 #' \dontrun{
 #' get_daily(
@@ -268,8 +268,8 @@ get_hourly <- function(parameter_type,
 #'   end_date = "2020-01-31",
 #'   var = "mean",
 #'   aggregation = "09HR"
-#' )
-#' }
+#' )}
+#'
 #' # Download the daily max over the standard day
 #' \dontrun{
 #' get_daily(
@@ -279,8 +279,8 @@ get_hourly <- function(parameter_type,
 #'   end_date = "2020-01-31",
 #'   var = "max",
 #'   aggregation = "24HR"
-#' )
-#' }
+#' )}
+#'
 #' @export
 get_daily <- function(parameter_type,
                       station_number,
@@ -367,8 +367,7 @@ get_daily <- function(parameter_type,
 #'   station_number = "570947",
 #'   start_date = "2016-01-01",
 #'   end_date = "2016-06-01"
-#' )
-#' }
+#' )}
 #' @export
 get_monthly <- function(parameter_type,
                         station_number,
@@ -423,8 +422,8 @@ get_monthly <- function(parameter_type,
 #'   station_number = "570946",
 #'   start_date = 2016,
 #'   end_date = 2020
-#' )
-#' }
+#' )}
+#'
 #' @export
 get_yearly <- function(parameter_type,
                        station_number,
@@ -503,11 +502,9 @@ get_yearly <- function(parameter_type,
 #' * [BoM Guide to Sensor Observation Services (SOS2) for Water Data Online](http://www.bom.gov.au/waterdata/wiski-web-public/Guide\%20to\%20Sensor\%20Observation\%20Services\%20(SOS2)\%20for\%20Water\%20Data\%20\%20Online\%20v1.0.1.pdf)
 #' @author Alexander Buzacott
 #' @examples
-#' \dontrun{
 #' parameters()
 #' parameters("continuous")
 #' parameters("discrete")
-#' }
 #' @export
 parameters <- function(pars) {
   continuous <- c(

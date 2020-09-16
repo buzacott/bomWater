@@ -78,8 +78,8 @@ get_yearly(
   station_number = "570946",
   start_date = 2016,
   end_date = 2020
-)
-}
+)}
+
 }
 \seealso{
 \itemize{

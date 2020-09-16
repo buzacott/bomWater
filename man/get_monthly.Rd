@@ -78,8 +78,7 @@ get_monthly(
   station_number = "570947",
   start_date = "2016-01-01",
   end_date = "2016-06-01"
-)
-}
+)}
 }
 \seealso{
 \itemize{

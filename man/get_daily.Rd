@@ -90,8 +90,8 @@ get_daily(
   end_date = "2020-01-31",
   var = "mean",
   aggregation = "24HR"
-)
-}
+)}
+
 # Download daily mean aggregated between 9am to 9am
 \dontrun{
 get_daily(
@@ -101,8 +101,8 @@ get_daily(
   end_date = "2020-01-31",
   var = "mean",
   aggregation = "09HR"
-)
-}
+)}
+
 # Download the daily max over the standard day
 \dontrun{
 get_daily(
@@ -112,8 +112,8 @@ get_daily(
   end_date = "2020-01-31",
   var = "max",
   aggregation = "24HR"
-)
-}
+)}
+
 }
 \seealso{
 \itemize{
