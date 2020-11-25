@@ -130,7 +130,7 @@ get_timeseries <- function(parameter_type,
           tz <- "Australia/Queensland" # AEST
         } else if (jurisdiction %in% c("SA", "NT")) {
           tz <- "Australia/Darwin" # ACST
-        } else if (jursidiction == "WA") {
+        } else if (jurisdiction == "WA") {
           tz <- "Australia/Perth" # AWST
         } else {
           message("Jurisdiction not found, returning datetimes in UTC")
