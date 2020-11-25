@@ -98,7 +98,8 @@ get_timeseries <- function(parameter_type,
     return_fields <- c("Timestamp", "Value", "Quality Code")
   }
 
-  station_list <- get_station_list(parameter_type, station_number)
+  # Get custom attributes to determine correct time zone
+  station_list <- get_station_list(parameter_type, station_number, "custom_attributes")
   if (nrow(station_list) == 0) {
     stop(paste("Station number", station_number, "is invalid"))
   }
@@ -119,11 +120,22 @@ get_timeseries <- function(parameter_type,
   # Only process data if it exists
   if (nrow(timeseries_values) > 0) {
     if ("Timestamp" %in% colnames(timeseries_values)) {
+
       # Get the tzone offset
       if (is.null(tz)) {
-        tz_offset <- stringr::str_sub(timeseries_values$Timestamp[1], -5, -4)
-        # For some reason a negative offset is ahead of UTC
-        tz <- paste0("Etc/GMT-", tz_offset)
+        jurisdiction <- stringr::str_split_fixed(station_list$DATA_OWNER_NAME, " -", n = 2)[1]
+
+        # Time zones are selected where there is no DST
+        if (jurisdiction %in% c("ACT", "ACTNSW", "NSW", "QLD", "TAS", "VIC")) {
+          tz <- "Australia/Queensland" # AEST
+        } else if (jurisdiction %in% c("SA", "NT")) {
+          tz <- "Australia/Darwin" # ACST
+        } else if (jursidiction == "WA") {
+          tz <- "Australia/Perth" # AWST
+        } else {
+          message("Jurisdiction not found, returning datetimes in UTC")
+          tz <- "UTC"
+        }
       }
       # nolint start
       timeseries_values$Timestamp <-
@@ -257,7 +269,8 @@ get_hourly <- function(parameter_type,
 #'   end_date = "2020-01-31",
 #'   var = "mean",
 #'   aggregation = "24HR"
-#' )}
+#' )
+#' }
 #'
 #' # Download daily mean aggregated between 9am to 9am
 #' \dontrun{
@@ -268,7 +281,8 @@ get_hourly <- function(parameter_type,
 #'   end_date = "2020-01-31",
 #'   var = "mean",
 #'   aggregation = "09HR"
-#' )}
+#' )
+#' }
 #'
 #' # Download the daily max over the standard day
 #' \dontrun{
@@ -279,7 +293,8 @@ get_hourly <- function(parameter_type,
 #'   end_date = "2020-01-31",
 #'   var = "max",
 #'   aggregation = "24HR"
-#' )}
+#' )
+#' }
 #'
 #' @export
 get_daily <- function(parameter_type,
@@ -367,7 +382,8 @@ get_daily <- function(parameter_type,
 #'   station_number = "570947",
 #'   start_date = "2016-01-01",
 #'   end_date = "2016-06-01"
-#' )}
+#' )
+#' }
 #' @export
 get_monthly <- function(parameter_type,
                         station_number,
@@ -422,7 +438,8 @@ get_monthly <- function(parameter_type,
 #'   station_number = "570946",
 #'   start_date = 2016,
 #'   end_date = 2020
-#' )}
+#' )
+#' }
 #'
 #' @export
 get_yearly <- function(parameter_type,
