@@ -11,7 +11,7 @@
 #' if there is no data available for that query.
 #' @author Alexander Buzacott
 make_bom_request <- function(params) {
-  bom_url <- httr::parse_url("http://www.bom.gov.au/waterdata/services")
+  bom_url <- "http://www.bom.gov.au/waterdata/services"
 
   base_params <- list(
     "service" = "kisters",
@@ -19,11 +19,9 @@ make_bom_request <- function(params) {
     "format" = "json"
   )
 
-  bom_url$query <- c(base_params, params)
-
   r <- tryCatch(
     {
-      r <- httr::RETRY("GET", bom_url, times = 5, quiet = TRUE)
+      r <- httr::RETRY("GET", bom_url, query = c(base_params, params), times = 5, quiet = TRUE)
       httr::stop_for_status(r, task = "request water data from BoM")
       httr::warn_for_status(r, task = "request water data from BoM")
     },
