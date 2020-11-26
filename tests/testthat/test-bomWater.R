@@ -44,7 +44,7 @@ test_that("I can get a station list", {
   expect_equal(r$station_latitude, -35.64947222)
   expect_equal(r$station_longitude, 148.83144444)
 
-  if (not_cran != FALSE) {
+  if (not_cran != FALSE & internet == TRUE) {
     r <- get_station_list("Rainfall", c("570946", "410730"))
   } else {
     with_mock_api({
