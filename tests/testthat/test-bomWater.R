@@ -1,4 +1,4 @@
-not_cran <- Sys.getenv('NOT_CRAN')
+not_cran <- Sys.getenv("NOT_CRAN")
 internet <- curl::has_internet()
 
 test_that("I can make requests to BoM", {
@@ -30,10 +30,10 @@ test_that("I can make requests to BoM", {
 
 test_that("I can get a station list", {
   if (not_cran != FALSE & internet == TRUE) {
-    r <- get_station_list("Rainfall", "570946")
+    r <- get_station_list("Rainfall", station_number = "570946")
   } else {
     with_mock_api({
-      r <- get_station_list("Rainfall", "570946")
+      r <- get_station_list("Rainfall", station_number = "570946")
     })
   }
   expect_equal(class(r)[1], "tbl_df")
@@ -45,10 +45,10 @@ test_that("I can get a station list", {
   expect_equal(r$station_longitude, 148.83144444)
 
   if (not_cran != FALSE & internet == TRUE) {
-    r <- get_station_list("Rainfall", c("570946", "410730"))
+    r <- get_station_list("Rainfall", station_number = c("570946", "410730"))
   } else {
     with_mock_api({
-      r <- get_station_list("Rainfall", c("570946", "410730"))
+      r <- get_station_list("Rainfall", station_number = c("570946", "410730"))
     })
   }
   expect_equal(class(r)[1], "tbl_df")
@@ -86,26 +86,26 @@ test_that("I can get timeseries values", {
   # Berthong annual rainfall
   if (not_cran != FALSE & internet == TRUE) {
     r <- get_timeseries_values(148131010,
-                               "2016-01-01",
-                               "2016-12-31",
-                               return_fields = c(
-                                 "Timestamp",
-                                 "Value",
-                                 "Quality Code",
-                                 "Interpolation Type"
-                               )
+      "2016-01-01",
+      "2016-12-31",
+      return_fields = c(
+        "Timestamp",
+        "Value",
+        "Quality Code",
+        "Interpolation Type"
+      )
     )
   } else {
     with_mock_api({
       r <- get_timeseries_values(148131010,
-                                 "2016-01-01",
-                                 "2016-12-31",
-                                 return_fields = c(
-                                   "Timestamp",
-                                   "Value",
-                                   "Quality Code",
-                                   "Interpolation Type"
-                                 )
+        "2016-01-01",
+        "2016-12-31",
+        return_fields = c(
+          "Timestamp",
+          "Value",
+          "Quality Code",
+          "Interpolation Type"
+        )
       )
     })
   }
@@ -117,24 +117,22 @@ test_that("I can get timeseries values", {
 })
 
 
-test_that("I get an error", {
+test_that("No results for parameter type and ID mistmatch", {
   if (not_cran != FALSE & internet == TRUE) {
-    expect_error(
-      get_timeseries_id(
+    r <- get_timeseries_id(
+      "Water Course Discharge",
+      "570946",
+      "DMQaQc.Merged.DailyMean.24HR"
+    )
+    expect_equal(nrow(r), 0)
+  } else {
+    with_mock_api({
+      r <- get_timeseries_id(
         "Water Course Discharge",
         "570946",
         "DMQaQc.Merged.DailyMean.24HR"
       )
-    )
-  } else {
-    with_mock_api({
-      expect_error(
-        get_timeseries_id(
-          "Water Course Discharge",
-          "570946",
-          "DMQaQc.Merged.DailyMean.24HR"
-        )
-      )
+      expect_equal(nrow(r), 0)
     })
   }
 })
@@ -171,4 +169,3 @@ test_that("get timeseries puts it all together", {
   expect_true(is.numeric(r$Value))
   expect_true(is.integer(r$`Quality Code`))
 })
-
