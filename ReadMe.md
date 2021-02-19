@@ -38,9 +38,6 @@ The SOS2 manual can be consulted for the units of the different timeseries, as w
 ### Installation
 
 ```r
-# Install the release version from CRAN
-install.packages("bomWater")
-
 # Install the development version from GitHub
 devtools::install_github('buzacott/bomWater')
 ```
