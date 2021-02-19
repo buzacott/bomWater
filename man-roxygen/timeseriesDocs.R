@@ -11,9 +11,9 @@
 #' (YYYY-MM-DD).
 #' @param end_date End date formatted as a string or date class (YYYY-MM-DD).
 #' @param tz Optional: the desired time zone for the output timeseries. Input
-#' must be an Olson Name (see `OlsonNames()`). By default the the timeseries
-#' is returned in an offset timezone (e.g. `Etc/GMT-10` for NSW) as the
-#' timeseries do not observe DST.
+#' must be an Olson Name (see `OlsonNames()`). By default the timeseries are
+#' returned in non-DST time zones (AEST, ACST or AWST) depending on the
+#' station location.
 #' @param return_fields Optional: columns to be returned from Water Data Online.
 #' By default Timestamp, Value and Quality Code are returned.
 #'

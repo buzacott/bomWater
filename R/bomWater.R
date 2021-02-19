@@ -21,8 +21,8 @@ make_bom_request <- function(params) {
 
   r <- tryCatch(
     {
-      r <- httr::GET(bom_url, query = c(base_params, params))
-      httr::stop_for_status(r, task = "request water data form BoM")
+      r <- httr::RETRY("GET", bom_url, query = c(base_params, params), times = 5, quiet = TRUE)
+      httr::stop_for_status(r, task = "request water data from BoM")
       httr::warn_for_status(r, task = "request water data from BoM")
     },
     error = function(e) {
@@ -56,9 +56,9 @@ make_bom_request <- function(params) {
     column_names <- unlist(stringr::str_split(json$columns, ","))
     if (length(json$data[[1]]) == 0) {
       tbl <- tibble::tibble(
-        Timestamp = character(),
-        Value = character(),
-        `Quality Code` = character()
+        Timestamp = lubridate::as_datetime(lubridate::ymd()),
+        Value = numeric(),
+        `Quality Code` = integer()
       )
     } else {
       colnames(json$data[[1]]) <- column_names

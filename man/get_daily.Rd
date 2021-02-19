@@ -35,9 +35,9 @@ midnight (`24HR`) or from 9am-9am (`09HR`). The default is `24HR`. `09HR`
 is only available for mean discharge and total rainfall and evaporation.}
 
 \item{tz}{Optional: the desired time zone for the output timeseries. Input
-must be an Olson Name (see \code{OlsonNames()}). By default the the timeseries
-is returned in an offset timezone (e.g. \code{Etc/GMT-10} for NSW) as the
-timeseries do not observe DST.}
+must be an Olson Name (see \code{OlsonNames()}). By default the timeseries are
+returned in non-DST time zones (AEST, ACST or AWST) depending on the
+station location.}
 
 \item{return_fields}{Optional: columns to be returned from Water Data Online.
 By default Timestamp, Value and Quality Code are returned.}
@@ -90,7 +90,8 @@ get_daily(
   end_date = "2020-01-31",
   var = "mean",
   aggregation = "24HR"
-)}
+)
+}
 
 # Download daily mean aggregated between 9am to 9am
 \dontrun{
@@ -101,7 +102,8 @@ get_daily(
   end_date = "2020-01-31",
   var = "mean",
   aggregation = "09HR"
-)}
+)
+}
 
 # Download the daily max over the standard day
 \dontrun{
@@ -112,7 +114,8 @@ get_daily(
   end_date = "2020-01-31",
   var = "max",
   aggregation = "24HR"
-)}
+)
+}
 
 }
 \seealso{
