@@ -4,7 +4,7 @@
 \alias{get_station_list}
 \title{Retrieve water observation stations}
 \usage{
-get_station_list(parameter_type, station_number, return_fields)
+get_station_list(parameter_type, station_number, bbox, return_fields)
 }
 \arguments{
 \item{parameter_type}{The parameter for the station request (e.g. Water
@@ -12,6 +12,9 @@ Course Discharge, Storage Level)}
 
 \item{station_number}{Optional: a single or multiple vector of AWRC station
 numbers.}
+
+\item{bbox}{Optional: a bounding box to get stations in a region of interest.
+Takes a vector ordered xmin, ymin, xmax, ymax.}
 
 \item{return_fields}{Station details to be returned. By default the columns
 returned are station name, number, ID, latitude and longitude. Can be

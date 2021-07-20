@@ -82,6 +82,8 @@ make_bom_request <- function(params) {
 #' Course Discharge, Storage Level)
 #' @param station_number Optional: a single or multiple vector of AWRC station
 #' numbers.
+#' @param bbox Optional: a bounding box to get stations in a region of interest.
+#' Takes a vector ordered xmin, ymin, xmax, ymax.
 #' @param return_fields  Station details to be returned. By default the columns
 #' returned are station name, number, ID, latitude and longitude. Can be
 #' customised with a vector of parameters.
@@ -156,7 +158,7 @@ make_bom_request <- function(params) {
 #' get_station_list("Water Course Discharge", "410730", return_fields)
 #' }
 #' @export
-get_station_list <- function(parameter_type, station_number, return_fields) {
+get_station_list <- function(parameter_type, station_number, bbox, return_fields) {
   params <- list("request" = "getStationList")
 
   # Set default to return all Water Course Discharge stations
@@ -169,6 +171,11 @@ get_station_list <- function(parameter_type, station_number, return_fields) {
     # Support multiple stations
     station_number <- paste(station_number, collapse = ",")
     params[["station_no"]] <- station_number
+  }
+
+  if (!missing(bbox)) {
+    bbox <- paste(bbox, collapse = ",")
+    params[['bbox']] = bbox
   }
 
   # Set the default return fields
@@ -331,3 +338,10 @@ get_parameter_list <- function(station_number, return_fields) {
 
   return(parameter_list)
 }
+
+
+
+
+
+
+
