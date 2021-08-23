@@ -82,7 +82,9 @@ get_timeseries <- function(parameter_type,
     #   Western Australia - UTC +08:00.
 
     # Get the station list and custom attributes to determine correct time zone
-    station_list <- get_station_list(parameter_type, station_number, "custom_attributes")
+    station_list <- get_station_list(parameter_type,
+                                     station_number,
+                                     return_fields="custom_attributes")
     if (nrow(station_list) == 0) {
       stop(paste("Station number", station_number, "is invalid"))
     }
